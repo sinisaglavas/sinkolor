@@ -68,3 +68,6 @@ Route::get('home/show-customer-entrance-form/{id}', [App\Http\Controllers\Custom
 Route::post('save-customer-output', [App\Http\Controllers\CustomerController::class, 'saveCustomerOutput'])->middleware('auth')->name('saveCustomerOutput');
 Route::get('/home/invoice-review/{id}', [App\Http\Controllers\CustomerController::class, 'invoiceReview']);
 Route::get('/home/all-customer-invoices', [App\Http\Controllers\CustomerController::class, 'allCustomerInvoices'])->middleware('auth')->name('home.allCustomerInvoices');
+Route::get('/home/one-customer-invoices/{id}', [App\Http\Controllers\CustomerController::class, 'oneCustomerInvoices'])->middleware('auth')->name('home.oneCustomerInvoices');
+Route::get('/home/customer-invoice-payment/{id}', [App\Http\Controllers\CustomerPaymentController::class, 'customerInvoicePayment'])->middleware('auth')->name('home.customerInvoicePayment');
+Route::get('/home/customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'customerInvoice'])->middleware('auth')->name('home.customerInvoice');

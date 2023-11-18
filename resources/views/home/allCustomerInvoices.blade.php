@@ -8,10 +8,9 @@
         <div class="row">
             <div class="col-3">
                 <a href="{{ url('/home') }}" class="btn btn-secondary form-control mb-2">Glavni meni</a>
-                <a href="{{ url('/home/new-invoice-data') }}" class="btn btn-secondary form-control mb-2">Napravi novu
-                    fakturu</a>
+                <a href="{{ url('/home/new-customer-invoices') }}" class="btn btn-danger form-control">Nova faktura kupca</a>
                 <hr>
-                <h2>Uplata po fakturi</h2>
+                <h3>Evidentiraj uplatu kupca</h3>
                 <form action="{{ route('home.addPayment') }}" method="post">
                     @csrf
                     <div class="row">
@@ -31,7 +30,7 @@
                     <label for="invoice-payment">Iznos uplate</label>
                     <input type="number" step=".01" name="invoice_payment" id="invoice-payment" class="form-control"
                            min="1" required>
-                    <button type="submit" class="btn btn-secondary form-control mt-4">Snimi</button>
+                    <button type="submit" class="btn btn-danger form-control mt-4">Snimi</button>
                 </form>
                 @if(session()->has('message'))
                     <div class="alert alert-success">
@@ -60,14 +59,14 @@
                             <tr>
                                 <th scope="row">{{ $invoice->id }}</th>
                                 <td>{{ Carbon\Carbon::parse($invoice->invoicing_date)->format('d. M. Y.') }}</td>
-                                <td><a href="{{ route('home.supplier_invoices', ['id'=>$invoice->customer_id]) }}"
-                                       style="text-decoration: none">{{ \App\Models\Customer::find($invoice->customer_id)->customer }}</a>
+                                <td><a href="{{ route('home.oneCustomerInvoices', ['id'=>$invoice->customer_id]) }}"
+                                       style="text-decoration: none" title="Sve fakture kupca">{{ \App\Models\Customer::find($invoice->customer_id)->customer }}</a>
                                 </td>
                                 <td><a href="{{ route('home.invoice', ['id'=>$invoice->id]) }}"
-                                       style="text-decoration: none;">{{ $invoice->invoice_number }}</a></td>
+                                       style="text-decoration: none;" title="Pogledaj fakturu">{{ $invoice->invoice_number }}</a></td>
                                 <td>{{ $invoice->invoice_amount }}</td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $paid = \App\Models\CustomerPayment::where('customer_invoice_id', $invoice->id)->where('customer_id', $invoice->customer_id)->sum('invoice_payment') }}</td>
+                                <td style="color: red">{{ $invoice->invoice_amount - $paid }}</td>
                                 <td><a href="{{ route('home.editInvoiceData',['id'=>$invoice->id]) }}"
                                        class="btn btn-sm btn-warning"
                                        onclick="return confirm('Da li ste sigurni?')">Promeni</a>

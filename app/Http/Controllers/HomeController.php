@@ -200,7 +200,6 @@ class HomeController extends Controller
         $invoice = Invoice::find($id);
         $total_per_invoice = Entrance::where('invoice_id', $id)->sum('sum');
         return view('home.showEntranceForm', compact('entrances', 'invoice', 'total_per_invoice'));
-       // return view('home.invoice', compact('invoice', 'entrances'));
     }
 
 

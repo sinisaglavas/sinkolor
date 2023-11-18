@@ -64,10 +64,10 @@
                                 <th scope="row">{{ $invoice->id }}</th>
                                 <td>{{ Carbon\Carbon::parse($invoice->invoicing_date)->format('d. M. Y.') }}</td>
                                 <td><a href="{{ route('home.supplier_invoices', ['id'=>$invoice->supplier_id]) }}"
-                                       style="text-decoration: none">{{ \App\Models\Supplier::find($invoice->supplier_id)->supplier }}</a>
+                                       style="text-decoration: none" title="Sve fakture dobavljača">{{ \App\Models\Supplier::find($invoice->supplier_id)->supplier }}</a>
                                 </td>
                                 <td><a href="{{ route('home.invoice', ['id'=>$invoice->id]) }}"
-                                       style="text-decoration: none;">{{ $invoice->invoice_number }}</a></td>
+                                       style="text-decoration: none;" title="Pogledaj fakturu">{{ $invoice->invoice_number }}</a></td>
                                 <td>{{ $invoice->invoice_amount }}</td>
                                 <td>{{ $paid = \App\Models\Payment::where('invoice_id', $invoice->id)->where('supplier_id', $invoice->supplier_id)->sum('invoice_payment') }}</td>
                                 <td>{{ $invoice->invoice_amount - $paid }}</td>

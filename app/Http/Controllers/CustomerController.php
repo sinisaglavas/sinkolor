@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\CustomerInvoice;
 use App\Models\CustomerOutput;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -96,6 +97,24 @@ class CustomerController extends Controller
             ->get();
 
         return view('home.allCustomerInvoices', compact('customers','all_invoices'));
+    }
+
+    public function oneCustomerInvoices($id)
+    {
+        $customer_invoices = CustomerInvoice::where('customer_id', $id)->get();
+        $customer = Customer::find($id);
+
+        return view('home.oneCustomerInvoices', compact('customer_invoices', 'customer'));
+
+    }
+
+    public function customerInvoice($id)
+    {
+        $invoice = CustomerInvoice::find($id);
+        $outputs = CustomerOutput::where('invoice_id', $id)->get();
+        $total_per_invoice = CustomerOutput::where('invoice_id', $id)->sum('sum');
+
+        return view('home.showCustomerEntranceForm', compact('invoice', 'outputs', 'total_per_invoice'));
     }
 
 }

@@ -5,9 +5,7 @@
         <div class="row">
             <div class="col-4">
                 <a href="{{ url('/home') }}" class="btn btn-secondary form-control">Glavni meni</a>
-                <a href="{{ route('home.stock') }}" class="btn btn-secondary form-control mt-3">Lager</a>
-                <a href="{{ route('home.newInvoice') }}" class="btn btn-secondary form-control mt-3">Napravi novu fakturu</a>
-                <a href="{{ url('/home/new-customer-invoices') }}" class="btn btn-secondary form-control mt-3">Račun za kupca</a>
+                <a href="{{ url('/home/new-customer-invoices') }}" class="btn btn-danger form-control mt-3">Nova faktura kupca</a>
             </div>
             <div class="col-2"></div>
             <div class="col-5">

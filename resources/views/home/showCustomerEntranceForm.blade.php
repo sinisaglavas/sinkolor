@@ -28,9 +28,8 @@
         <div class="row">
             <div class="col-4">
                 <a href="{{ url('/home') }}" class="btn btn-secondary form-control mb-2">Glavni meni</a>
-                <a href="{{ url('/home/new-invoice-data') }}" class="btn btn-secondary form-control mb-2">Napravi novu
-                    fakturu</a>
-                <a href="{{ route('home.allCustomerInvoices') }}" class="btn btn-secondary form-control mb-5">Sve fakture kupaca</a>
+                <a href="{{ url('/home/new-customer-invoices') }}" class="btn btn-danger form-control mb-2">Nova faktura kupca</a>
+                <a href="{{ route('home.allCustomerInvoices') }}" class="btn btn-danger form-control mb-2">Sve fakture kupaca</a>
                 <div class="col">Dobavljač: &nbsp; &nbsp; &nbsp;<span
                         style="font-weight: bold; font-size: 17px">{{ \App\Models\Customer::find($invoice->customer_id)->customer }}</span>
                 </div>
@@ -77,9 +76,9 @@
                         <label for="sum">Ukupno</label>
                         <input type="number" step=".01" min="0" name="sum" id="sum" class="form-control" readonly
                                required>
-                        <button type="submit" class="btn btn-secondary form-control mt-4">Snimi</button>
+                        <button type="submit" class="btn btn-danger form-control mt-4">Snimi</button>
                     </form>
-                    <a href="/home/invoice-review/{{ $invoice->id }}" class="btn btn-secondary form-control mt-2">Pogledaj fakturu</a>
+                    <a href="/home/invoice-review/{{ $invoice->id }}" class="btn btn-danger form-control mt-2">Pogledaj fakturu</a>
                 </div>
             </div>
             <div class="col-1"></div>
