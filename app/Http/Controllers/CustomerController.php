@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\CustomerInvoice;
 use App\Models\CustomerOutput;
-use App\Models\Supplier;
+use App\Models\CustomerPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -115,6 +115,17 @@ class CustomerController extends Controller
         $total_per_invoice = CustomerOutput::where('invoice_id', $id)->sum('sum');
 
         return view('home.showCustomerEntranceForm', compact('invoice', 'outputs', 'total_per_invoice'));
+    }
+
+    public function addCustomerPayment(Request $request)
+    {
+        $new_customer_payment = new CustomerPayment();
+        $new_customer_payment->invoice_payment = $request->invoice_payment;
+        $new_customer_payment->customer_invoice_id = $request->invoice_id;
+        $new_customer_payment->customer_id = $request->customer;
+        $new_customer_payment->save();
+
+        return redirect()->back()->with('message', 'Uplata je snimljena');
     }
 
 }
