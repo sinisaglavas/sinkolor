@@ -63,7 +63,7 @@
                                 <td><a href="{{ route('home.oneCustomerInvoices', ['id'=>$invoice->customer_id]) }}"
                                        style="text-decoration: none" title="Sve fakture kupca">{{ \App\Models\Customer::find($invoice->customer_id)->customer }}</a>
                                 </td>
-                                <td><a href="{{ route('home.customerInvoice', ['id'=>$customer_invoice->id]) }}"
+                                <td><a href="{{ route('home.customerInvoice', ['id'=>$invoice->id]) }}"
                                        style="text-decoration: none;" title="Pogledaj fakturu">{{ $invoice->invoice_number }}</a></td>
                                 <td>{{ $invoice->invoice_amount }}</td>
                                 <td>{{ $paid = \App\Models\CustomerPayment::where('customer_invoice_id', $invoice->id)->where('customer_id', $invoice->customer_id)->sum('invoice_payment') }}</td>
@@ -80,7 +80,7 @@
                                 <td><a href="{{ route('home.oneCustomerInvoices', ['id'=>$invoice->customer_id]) }}"
                                        style="text-decoration: none" title="Sve fakture kupca">{{ \App\Models\Customer::find($invoice->customer_id)->customer }}</a>
                                 </td>
-                                <td><a href="{{ route('home.customerInvoice', ['id'=>$customer_invoice->id]) }}"
+                                <td><a href="{{ route('home.customerInvoice', ['id'=>$invoice->id]) }}"
                                        style="text-decoration: none;" title="Pogledaj fakturu">{{ $invoice->invoice_number }}</a></td>
                                 <td>{{ $invoice->invoice_amount }}</td>
                                 <td>{{ $paid = \App\Models\CustomerPayment::where('customer_invoice_id', $invoice->id)->where('customer_id', $invoice->customer_id)->sum('invoice_payment') }}</td>
