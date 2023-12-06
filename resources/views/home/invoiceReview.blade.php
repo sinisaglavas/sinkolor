@@ -12,13 +12,13 @@
 
 <div class="container">
     <div class="row mt-5">
-        <div class="col-4">
+        <div class="col-5">
             <a href="{{ url('/home') }}" class="text-decoration-none" style="color: black"><h6 class="fw-bold">DOO "SIN KOLOR"</h6></a>
             <h6>Kralja Petra I 92</h6>
             <h6>21433 Silbaš Srbija</h6>
             <h6>T. račun: <span class="fw-bold">340-11031905-33</span></h6>
         </div>
-        <div class="col-4"></div>
+        <div class="col-3"></div>
         <div class="col-4">
             <h5>Kupac:</h5>
             <h6 class="fw-bold">{{ $customer->customer }}</h6>
