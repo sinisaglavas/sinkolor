@@ -12,8 +12,9 @@
                     <input type="date" name="date" value="{{ date('d.m.Y') }}" class="form-control" id="date" required>
                     <button class="btn btn-secondary form-control mt-2">Posalji</button>
                 </form>
+                @if( App\Models\Output::latest()->first())
                 <p>Zadnji evidentirani dan: {{ Carbon\Carbon::parse(\App\Models\Output::latest()->first()->date_of_turnover)->format('l d. M. Y.') }}
-                    &nbsp;&nbsp;{{ \App\Models\Output::where('date_of_turnover', \App\Models\Output::latest()->first()->date_of_turnover)->sum('sum') }}</p>
+                    {{ \App\Models\Output::where('date_of_turnover', \App\Models\Output::latest()->first()->date_of_turnover)->sum('sum') }}</p>
                 <div class="row mb-1">
                     <div class="col"><a href="{{ route('home.getMonth', ['id'=>1]) }}" class="btn btn-info" style="width: 100%;">Januar
                             &nbsp;{{ \App\Models\Output::whereMonth('date_of_turnover', 1)->sum('sum') }}</a></div>
@@ -51,6 +52,7 @@
                     <div class="col"><a href="{{ route('home.getMonth', ['id'=>12]) }}" class="btn btn-info" style="width: 100%;">Decembar
                             &nbsp;{{ \App\Models\Output::whereMonth('date_of_turnover', 12)->sum('sum') }}</a></div>
                 </div>
+                @endif
             </div>
             <div class="col"></div>
             <div class="col-7">
