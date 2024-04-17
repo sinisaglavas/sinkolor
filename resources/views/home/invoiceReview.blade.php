@@ -30,16 +30,16 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <h5 class="fw-bold mb-4">Predračun broj: 1{{ $invoice->invoice_number }} </h5>
+            <h5 class="fw-bold mb-2">Predračun broj: 1{{ $invoice->invoice_number }} </h5>
             <div>Mesto izdavanja računa: Silbaš</div>
             <div>Datum prometa dobara i usluga: <span
                     class="fw-bold">{{ Carbon\Carbon::parse($invoice->invoicing_date)->format('j. F Y.') }}</span></div>
             <div>Plaćanje odmah</div>
         </div>
     </div>
-    <div class="row mt-5">
+    <div class="row mt-2">
         <hr>
-        <div class="col-12 mb-5">
+        <div class="col-12 mb-3">
             <table class="table table-bordered">
                 <thead>
                 <tr class="table-active text-center">
