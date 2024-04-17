@@ -6,6 +6,9 @@ use App\Models\Customer;
 use App\Models\CustomerInvoice;
 use App\Models\CustomerOutput;
 use App\Models\CustomerPayment;
+use App\Models\Entrance;
+use App\Models\Invoice;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -127,5 +130,19 @@ class CustomerController extends Controller
 
         return redirect()->back()->with('message', 'Uplata je snimljena');
     }
+
+    public function justDeleteArticle($id, $code, $invoice_id) // metoda za brisanje ulaza robe kupca
+    {
+        $delete_article = CustomerOutput::find($id); // artikal sa svim parametrima koji se brise
+        $delete_article->delete();
+        $invoice = CustomerInvoice::find($invoice_id);
+        $outputs = CustomerOutput::where('invoice_id', $invoice_id)->get();
+        $total_per_invoice = CustomerOutput::where('invoice_id', $invoice_id)->sum('sum');
+        //return redirect()->route('requestedDay', ['date'=>$search_date]);
+        //return redirect()->back()->with('message', 'Artikal je obrisan iz prometa i vracen ponovo na stanje lagera');
+        return view('home.showCustomerEntranceForm', compact('invoice', 'outputs', 'total_per_invoice'));
+
+    }
+
 
 }

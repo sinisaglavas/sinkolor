@@ -103,8 +103,8 @@
                                 <td>{{ $output->pcs }}</td>
                                 <td>{{ $output->price }}</td>
                                 <td>{{ $output->sum }}</td>
-                                <td><a href="{{ route('home.updateBeforeDelete', ['id'=>$output->id, 'code'=>$output->code, 'invoice_id'=>$invoice->id]) }}" class="btn btn-sm btn-warning"
-                                       onclick="return confirm('Da li ste sigurni?')">Obrisi</a>
+                                <td><a href="{{ route('justDeleteArticle', ['id'=>$output->id, 'code'=>$output->code, 'invoice_id'=>$invoice->id]) }}" class="btn btn-sm btn-warning"
+                                        onclick="return confirm('Da li ste sigurni?')">Obrisi</a>
                                 </td>
                             </tr>
                             </tbody>

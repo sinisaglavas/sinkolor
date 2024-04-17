@@ -74,7 +74,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td><input type="text" name="code" id="code" placeholder="Unesi šifru" class="form-control" required></td>
+                                <td><input type="text" name="code" id="code" placeholder="Unesi šifru" class="form-control" required"></td>
                                 <td><input type="text" name="article" id="search" placeholder="Unesi slova artikla" class="form-control" required>
                                     <ul id="list" class="border m-0 p-0" style="display: none"></ul></td>
                                 <td><input type="number" step=".01" min="0" name="pcs" id="pcs"
@@ -82,7 +82,7 @@
                                 <td><input type="number" step=".01" min="0" name="price" id="price"
                                            placeholder="Unos je obavezan" class="form-control" required></td>
                                 <td><input type="number" step=".01" min="0" name="sum" id="sum" class="form-control" readonly required></td>
-                                <td><button type="submit" class="btn btn-secondary form-control mt-2" id="save-data">Snimi</button></td>
+                                <td><input type="submit" class="btn btn-secondary form-control" id="save-data"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -127,9 +127,22 @@
             </div>
         </div>
     @endif
-
-
     <script>
+        let pcs = document.getElementById('pcs');
+        document.getElementById("save-data").addEventListener("click", function(event) {
+            if (pcs.value) {
+                // Zaustavljanje podrazumevanog ponašanja obrasca
+                // zato sto se podaci šalju asinhrono i onda se forma ne šalje po defaultu
+                event.preventDefault();
+                // Odloženo slanje podataka nakon 1. sekunde
+                setTimeout(function() {
+                // .form-pristupamo njegovom roditeljskom elementu forme korišćenjem .form svojstva da bi mogli koristiti submit() metodu
+                // .submit() metoda forme se koristi za slanje podataka forme na server
+                // korisno kada želimo da programski izvršimo slanje forme na primer nakon određenog vremenskog intervala ili nakon provere uslova
+                    document.getElementById("save-data").form.submit();
+                }, 1000);
+            }
+        });
 
         function writeDataInList(array) {
             document.getElementById('list').innerHTML = "";
@@ -191,7 +204,7 @@
                 .then(res => res.json())
                 .then(data => {
                     // ovde se obradjuje uspesno dobijen odgovor sa api rute
-                    //   console.log(data);
+                       //console.log(data);
                     writeDataInList(data);
                 })
             document.getElementById('search').addEventListener('keyup', function (event) {
@@ -204,8 +217,8 @@
             });
 
         });
-
-        function writeDataInInput(array){
+        // async postavlja da se izvrsi prvo fetch pa onda ostatak koda
+       async function writeDataInInput(array){
             let code = document.getElementById('code');
             code.value = array[0].code;
             let article = document.getElementById('search');
@@ -213,7 +226,8 @@
             let price = document.getElementById('price');
             price.value = array[0].price;
             let pcs = document.getElementById('pcs');
-            pcs.addEventListener('keyup', function () {
+            // await postavlja da se izvrsi prvo fetch pa onda ostatak koda
+            await pcs.addEventListener('keyup', function () {
                 let sum = document.getElementById('sum');
                 if (pcs.value && price.value) {
                     sum.value = pcs.value * price.value;
@@ -224,7 +238,7 @@
                     sum.value = '';
                 }
             });
-            price.addEventListener('keyup', function () {
+            await price.addEventListener('keyup', function () {
                 if (pcs.value && price.value) {
                     let sum = document.getElementById('sum');
                     sum.value = pcs.value * price.value;

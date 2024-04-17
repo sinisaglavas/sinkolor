@@ -238,6 +238,21 @@
                 }
             })
 
+            let pcs = document.getElementById('pcs');
+            pcs.addEventListener('keyup', function () {
+                let discount = document.getElementById('discount');
+                let purchasePrice = document.getElementById('purchase_price');
+                let rebate = document.getElementById('rebate');
+                let sum = document.getElementById('sum');
+                if (discount.value && purchasePrice.value && rebate.value && discount.value && tax.value) {
+                    sum.value = pcs.value * (purchasePrice.value * (1 - rebate.value / 100) * (1 - discount.value / 100) * (1 + tax.value / 100));
+                    sum.value = Math.round((sum.value * 100 + Number.EPSILON)) / 100 // skracuje na dve decimale
+                }
+                if (pcs.value === '') {
+                    sum.value = '';
+                }
+            })
+
         }
 
         // $('#search').change(function () {
