@@ -14,12 +14,12 @@
                 <form action="{{ route('home.addCustomerPayment') }}" method="post">
                     @csrf
                     <div class="col">
-                        <label for="supplier-id">Dobavljač</label>
+                        <label for="customer-id">Dobavljač</label>
                         @if(isset($customer))
-                            <input type="hidden" name="supplier_id" value="{{ $customer->id }}">
-                            <input type="text" name="supplier" id="supplier-id" class="form-control" value="{{ $customer->customer }}" readonly required>
+                            <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                            <input type="text" name="customer" id="customer" class="form-control" value="{{ $customer->customer }}" readonly required>
                         @else
-                            <input type="text" name="supplier_id" id="supplier-id" class="form-control" readonly required>
+                            <input type="text" name="customer_id" id="customer-id" class="form-control" readonly required>
                         @endif
                     </div>
                     <div class="col">

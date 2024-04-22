@@ -127,7 +127,7 @@ class CustomerController extends Controller
         $new_customer_payment = new CustomerPayment();
         $new_customer_payment->invoice_payment = $request->invoice_payment;
         $new_customer_payment->customer_invoice_id = $request->invoice_id;
-        $new_customer_payment->customer_id = $request->customer;
+        $new_customer_payment->customer_id = $request->customer_id;
         $new_customer_payment->save();
 
         return redirect()->back()->with('message', 'Uplata je snimljena');
