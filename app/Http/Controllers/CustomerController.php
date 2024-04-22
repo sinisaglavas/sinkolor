@@ -8,7 +8,9 @@ use App\Models\CustomerOutput;
 use App\Models\CustomerPayment;
 use App\Models\Entrance;
 use App\Models\Invoice;
+use App\Models\Payment;
 use App\Models\Stock;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -97,7 +99,7 @@ class CustomerController extends Controller
         $customers = Customer::all();
         $all_invoices = DB::table('customer_invoices')
             ->orderBy('id', 'asc')
-            ->get();
+            ->get(); // sve fakture kupaca
 
         return view('home.allCustomerInvoices', compact('customers','all_invoices'));
     }
@@ -142,6 +144,24 @@ class CustomerController extends Controller
         //return redirect()->back()->with('message', 'Artikal je obrisan iz prometa i vracen ponovo na stanje lagera');
         return view('home.showCustomerEntranceForm', compact('invoice', 'outputs', 'total_per_invoice'));
 
+    }
+
+    public function markCustomerInvoice($id)
+    {
+        $customer_invoice = CustomerInvoice::find($id);
+        $customer = Customer::find($customer_invoice->customer_id);
+        $invoice_amount = $customer_invoice->invoice_amount; // iznos fakture
+        $payments = CustomerPayment::where('customer_invoice_id', $customer_invoice->id)->
+        where('customer_id', $customer_invoice->customer_id)->sum('invoice_payment'); // ukupno placen iznos za fakturu
+        $rest = $invoice_amount - $payments; // preostali iznos za placanje
+
+        // potrebno za vracanje na allInvoices.blade.php
+        $all_invoices = DB::table('customer_invoices')
+            ->orderBy('id', 'asc')
+            ->get(); // sve fakture kupaca
+        $customers = Customer::all();
+
+        return view('home.allCustomerInvoices', compact('customer_invoice', 'customer', 'rest', 'all_invoices', 'customers'));
     }
 
 

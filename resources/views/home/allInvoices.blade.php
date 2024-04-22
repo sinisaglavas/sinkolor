@@ -39,12 +39,19 @@
                         @endif
                     </div>
                     <label for="invoice-payment">Iznos uplate</label>
+                    @if(isset($rest))
+                        <input type="number" step=".01" name="invoice_payment" id="invoice-payment" class="form-control"
+                               min="1" max="{{ $rest }}" value="{{ $rest }}" required>
+                    @else
                     <input type="number" step=".01" name="invoice_payment" id="invoice-payment" class="form-control"
                            min="1" required>
+                    @endif
                     <button type="submit" class="btn btn-secondary form-control mt-4">Snimi</button>
                     <div style="font-size: 10px;">Upozorenje:<br>
-                        Uplata neće biti evidentirana ako nisu popunjena sva polja.<br>
-                        Polja 'Dobavljač' i 'Broj fakture' se popunjavaju klikom na plavo dugme 'Plati'.
+                        Uplata neće biti evidentirana ako nisu popunjena sva polja.
+                        Polja iznad se popunjavaju klikom na plavo dugme 'Plati'.
+                        Polje 'Iznos uplate' prikazije preostali iznos za odabranu fakturu.
+                        Iznos uplate promeniti po potrebi.
                     </div>
                 </form>
                 @if(session()->has('message'))

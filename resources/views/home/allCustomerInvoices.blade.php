@@ -13,24 +13,45 @@
                 <h3>Evidentiraj uplatu kupca</h3>
                 <form action="{{ route('home.addCustomerPayment') }}" method="post">
                     @csrf
-                    <div class="row">
-                        <div class="col-4">
-                            <label for="invoice-id">Id fakture</label>
-                            <input type="number" name="invoice_id" id="invoice-id" class="form-control" required>
-                        </div>
-                        <div class="col">
-                            <label for="customer">Izaberi kupca:</label>
-                            <select class="form-control" name="customer" id="customer" required>
-                                @foreach($customers as $customer)
-                                    <option value="{{ $customer->id}}">{{ $customer->customer }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="col">
+                        <label for="supplier-id">Dobavljač</label>
+                        @if(isset($customer))
+                            <input type="hidden" name="supplier_id" value="{{ $customer->id }}">
+                            <input type="text" name="supplier" id="supplier-id" class="form-control" value="{{ $customer->customer }}" readonly required>
+                        @else
+                            <input type="text" name="supplier_id" id="supplier-id" class="form-control" readonly required>
+                        @endif
+                    </div>
+                    <div class="col">
+                        @if(isset($customer_invoice))
+                            <input type="hidden" name="invoice_id" id="invoice-id" class="form-control" value="{{ $customer_invoice->id }}" readonly required>
+                        @else
+                            <input type="hidden" name="invoice_id" id="invoice-id" class="form-control" readonly required>
+                        @endif
+                    </div>
+                    <div class="col">
+                        <label for="invoice-number">Broj fakture</label>
+                        @if(isset($customer_invoice))
+                            <input type="text" id="invoice-number" class="form-control" value="{{ $customer_invoice->invoice_number }}" readonly required>
+                        @else
+                            <input type="text" id="invoice-number" class="form-control" readonly required>
+                        @endif
                     </div>
                     <label for="invoice-payment">Iznos uplate</label>
-                    <input type="number" step=".01" name="invoice_payment" id="invoice-payment" class="form-control"
-                           min="1" required>
-                    <button type="submit" class="btn btn-danger form-control mt-4">Snimi</button>
+                    @if(isset($rest))
+                        <input type="number" step=".01" name="invoice_payment" id="invoice-payment" class="form-control"
+                               min="1" max="{{ $rest }}" value="{{ $rest }}" required>
+                    @else
+                        <input type="number" step=".01" name="invoice_payment" id="invoice-payment" class="form-control"
+                               min="1" required>
+                    @endif
+                    <button type="submit" class="btn btn-secondary form-control mt-4">Snimi</button>
+                    <div style="font-size: 10px;">Upozorenje:<br>
+                        Uplata neće biti evidentirana ako nisu popunjena sva polja.
+                        Polja iznad se popunjavaju klikom na plavo dugme 'Plati'.
+                        Polje 'Iznos uplate' prikazije preostali iznos za odabranu fakturu.
+                        Iznos uplate promeniti po potrebi.
+                    </div>
                 </form>
                 @if(session()->has('message'))
                     <div class="alert alert-success">
@@ -52,6 +73,7 @@
                         <th scope="col">Uk. plaćeno</th>
                         <th scope="col">Ostatak</th>
                         <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     @foreach($all_invoices as $invoice)
@@ -72,6 +94,7 @@
                                        class="btn btn-sm btn-warning"
                                        onclick="return confirm('Da li ste sigurni?')">Promeni</a>
                                 </td>
+                                <td class="border border-1 text-center"><a href="{{ route('markCustomerInvoice', ['id'=>$invoice->id]) }}" class="btn btn-sm btn-primary">Plati</a></td>
                             </tr>
                             @else
                             <tr>
@@ -89,6 +112,7 @@
                                        class="btn btn-sm btn-warning"
                                        onclick="return confirm('Da li ste sigurni?')">Promeni</a>
                                 </td>
+                                <td class="border border-1 text-center"><a href="{{ route('markCustomerInvoice', ['id'=>$invoice->id]) }}" class="btn btn-sm btn-primary">Plati</a></td>
                             </tr>
                         @endif
                         </tbody>

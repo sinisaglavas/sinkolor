@@ -73,6 +73,8 @@ Route::get('/home/customer-invoice-payment/{id}', [App\Http\Controllers\Customer
 Route::get('/home/customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'customerInvoice'])->middleware('auth')->name('home.customerInvoice');
 Route::post('/home/add-customer-payment', [App\Http\Controllers\CustomerController::class, 'addCustomerPayment'])->name('home.addCustomerPayment');
 Route::get('/just-delete-article/{id}/{code}/{invoice_id}', [App\Http\Controllers\CustomerController::class, 'justDeleteArticle'])->name('justDeleteArticle');
+Route::get('/mark-customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'markCustomerInvoice'])->name('markCustomerInvoice')->middleware('auth');
+
 
 // Invoices controller
 Route::get('/mark-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'markInvoice'])->name('markInvoice')->middleware('auth');
