@@ -46,7 +46,10 @@ Route::get('/home/get-month/{id}', [App\Http\Controllers\HomeController::class, 
 Route::get('/home/invoice-payment/{id}', [App\Http\Controllers\HomeController::class, 'invoice_payment'])->name('home.invoice_payment');
 
 Route::get('/home/edit-invoice-data/{id}', [App\Http\Controllers\HomeController::class, 'editInvoiceData'])->name('home.editInvoiceData');
+Route::get('/home/edit-customer-invoice-data/{id}', [App\Http\Controllers\CustomerController::class, 'editCustomerInvoiceData'])->name('home.editCustomerInvoiceData');
+
 Route::put('/invoice/{id}/edit', [App\Http\Controllers\HomeController::class, 'updateInvoice'])->name('updateInvoice');
+Route::put('/customer-invoice/{id}/edit', [App\Http\Controllers\CustomerController::class, 'updateCustomerInvoice'])->name('updateCustomerInvoice');
 
 Route::post('/home/add-supplier', [App\Http\Controllers\HomeController::class, 'add_supplier'])->name('home.addSupplier');
 Route::post('/save-stock',[App\Http\Controllers\HomeController::class,'saveStock'])->name('saveStock');

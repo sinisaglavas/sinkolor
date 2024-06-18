@@ -90,7 +90,7 @@
                                 <td>{{ $invoice->invoice_amount }}</td>
                                 <td>{{ $paid = \App\Models\CustomerPayment::where('customer_invoice_id', $invoice->id)->where('customer_id', $invoice->customer_id)->sum('invoice_payment') }}</td>
                                 <td style="color: red">{{ $invoice->invoice_amount - $paid }}</td>
-                                <td><a href="{{ route('home.editInvoiceData',['id'=>$invoice->id]) }}"
+                                <td><a href="{{ route('home.editCustomerInvoiceData',['id'=>$invoice->id]) }}"
                                        class="btn btn-sm btn-warning"
                                        onclick="return confirm('Da li ste sigurni?')">Promeni</a>
                                 </td>
@@ -108,7 +108,7 @@
                                 <td>{{ $invoice->invoice_amount }}</td>
                                 <td>{{ $paid = \App\Models\CustomerPayment::where('customer_invoice_id', $invoice->id)->where('customer_id', $invoice->customer_id)->sum('invoice_payment') }}</td>
                                 <td style="color: red">{{ $invoice->invoice_amount - $paid }}</td>
-                                <td><a href="{{ route('home.editInvoiceData',['id'=>$invoice->id]) }}"
+                                <td><a href="{{ route('home.editCustomerInvoiceData',['id'=>$invoice->id]) }}"
                                        class="btn btn-sm btn-warning"
                                        onclick="return confirm('Da li ste sigurni?')">Promeni</a>
                                 </td>

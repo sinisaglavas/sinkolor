@@ -158,10 +158,35 @@ class CustomerController extends Controller
         // potrebno za vracanje na allInvoices.blade.php
         $all_invoices = DB::table('customer_invoices')
             ->orderBy('id', 'asc')
-            ->get(); // sve fakture kupaca
+            ->get(); // sve fakture kupaca poredjane po id silazno
         $customers = Customer::all();
 
         return view('home.allCustomerInvoices', compact('customer_invoice', 'customer', 'rest', 'all_invoices', 'customers'));
+    }
+
+    public function editCustomerInvoiceData(Request $request, $id)
+    {
+        $invoice = CustomerInvoice::find($id);
+        $customer = Customer::find($invoice->customer_id)->customer;
+
+        return view('home.editCustomerInvoiceData', compact('invoice', 'customer'));
+
+    }
+
+    public function updateCustomerInvoice(Request $request, $id)
+    {
+        $invoice = CustomerInvoice::find($id);
+        $request->validate([
+            'invoice_number'=>'required',
+            'invoice_amount'=>'required',
+            'invoicing_date'=>'required'
+        ]);
+        $invoice->invoice_number = $request->invoice_number;
+        $invoice->invoice_amount = $request->invoice_amount;
+        $invoice->invoicing_date = $request->invoicing_date;
+        $invoice->update();
+
+        return redirect()->back()->with('message', 'Podaci su promenjeni');
     }
 
 

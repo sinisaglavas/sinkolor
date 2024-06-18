@@ -33,15 +33,27 @@
                     </div>
                     <div class="row">
                         <label for="invoicing_date">Datum ulaza:</label>
-                        <input type="date" name="invoicing_date" class="form-control" id="invoicing_date" required>
+                        <input type="date" name="invoicing_date" class="form-control{{ $errors->has('invoicing_date') ? ' is-invalid': '' }}"
+                               id="invoicing_date">
+                        @if($errors->has('invoicing_date'))
+                            <span class="invalid-feedback"><strong>{{ __("Unesite datum") }}</strong></span>
+                        @endif
                     </div>
                     <div class="row">
                         <label for="invoice_amount">Iznos sa racuna:</label>
-                        <input type="number" step=".01" name="invoice_amount" class="form-control" id="invoice_amount" required>
+                        <input type="number" step=".01" name="invoice_amount" class="form-control{{ $errors->has('invoice_amount') ? ' is-invalid': '' }}"
+                               id="invoice_amount">
+                        @if($errors->has('invoice_amount'))
+                            <span class="invalid-feedback"><strong>{{ __("Polje 'Iznos sa računa' nije ispravno popunjeno") }}</strong></span>
+                        @endif
                     </div>
                     <div class="row">
                         <label for="invoice_number">Otpremnica/faktura:</label>
-                        <input type="text" name="invoice_number" class="form-control" id="invoice_number" required>
+                        <input type="text" name="invoice_number" class="form-control{{ $errors->has('invoice_number') ? ' is-invalid': '' }}"
+                               id="invoice_number">
+                        @if($errors->has('invoice_number'))
+                            <span class="invalid-feedback"><strong>{{ __("Polje 'Otpremnica/faktura' nije ispravno popunjeno") }}</strong></span>
+                        @endif
                         <div class="row">
                             <div class="col">
                                 <button class="btn btn-success form-control mt-3">Snimi</button>
