@@ -11,24 +11,23 @@
 <body>
 
 <div class="container">
-    <div class="row mt-1">
+    <div class="row mt-3">
         <div class="col-4">
             <a href="{{ url('/home') }}" class="text-decoration-none" style="color: black"><p class="fw-bold m-0">DOO "SIN KOLOR"</p></a>
-            <h6>Kralja Petra I 92</h6>
-            <h6>21433 Silbaš Srbija</h6>
-            <p>TR: 340-11031905-33</p>
+            <p class="m-0">Kralja Petra I 92</p>
+            <p class="m-0">21433 Silbaš</p>
+            <p class="m-0">TR: 340-11031905-33</p>
         </div>
         <div class="col-3"></div>
         <div class="col-5">
-            <h5>Kupac:</h5>
-            <h6 class="fw-bold">{{ $customer->customer }}</h6>
-            <h6>{{ $customer->address }}</h6>
-            <h6>{{ $customer->city }}</h6>
-            <h6>PIB: {{ $customer->pib }} &nbsp; &nbsp;MB: {{ $customer->mb }}</h6>
-            <h6></h6>
+            <p class="m-0">Kupac:</p>
+            <p class="fw-bold m-0">{{ $customer->customer }}</p>
+            <p class="m-0">{{ $customer->address }}</p>
+            <p class="m-0">{{ $customer->city }}</p>
+            <p class="m-0"><small>PIB: {{ $customer->pib }} &nbsp;MB: {{ $customer->mb }}</small></p>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-2">
         <div class="col-12">
             <h5 class="fw-bold m-0">Račun broj: 1{{ $invoice->invoice_number }} </h5>
             <div>Mesto izdavanja računa: Silbaš</div>
