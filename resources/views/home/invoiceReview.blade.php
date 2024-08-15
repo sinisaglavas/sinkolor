@@ -11,7 +11,7 @@
 <body>
 
 <div class="container">
-    <div class="row mt-5">
+    <div class="row mt-1">
         <div class="col-4">
             <a href="{{ url('/home') }}" class="text-decoration-none" style="color: black"><p class="fw-bold m-0">DOO "SIN KOLOR"</p></a>
             <h6>Kralja Petra I 92</h6>
@@ -24,20 +24,20 @@
             <h6 class="fw-bold">{{ $customer->customer }}</h6>
             <h6>{{ $customer->address }}</h6>
             <h6>{{ $customer->city }}</h6>
-            <h6>PIB: {{ $customer->pib }}</h6>
-            <h6>MB: {{ $customer->mb }}</h6>
+            <h6>PIB: {{ $customer->pib }} &nbsp; &nbsp;MB: {{ $customer->mb }}</h6>
+            <h6></h6>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <h5 class="fw-bold mb-2">Račun broj: 1{{ $invoice->invoice_number }} </h5>
+            <h5 class="fw-bold m-0">Račun broj: 1{{ $invoice->invoice_number }} </h5>
             <div>Mesto izdavanja računa: Silbaš</div>
             <div>Datum prometa dobara i usluga: <span
                     class="fw-bold">{{ Carbon\Carbon::parse($invoice->invoicing_date)->format('j. F Y.') }}</span></div>
             <div>Plaćanje odmah</div>
         </div>
     </div>
-    <div class="row mt-2">
+    <div class="row mt-1">
         <hr>
         <div class="col-12 mb-3">
             <table class="table table-bordered">
