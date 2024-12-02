@@ -172,6 +172,10 @@ class HomeController extends Controller
         $stock = Stock::where('code', $request->code)->first();
         $stock->pcs = $stock->pcs + $request->pcs;
         $stock->purchase_price = $request->purchase_price * (1-$request->rebate / 100) * (1-$request->discount / 100) * (1 + $request->tax / 100);
+//        $stock->purchase_price_sum = $stock->purchase_price_sum + //dodao 02.12.2024.
+//            ($request->purchase_price * (1-$request->rebate / 100) * (1-$request->discount / 100) * (1 + $request->tax / 100) * $request->pcs);
+        $stock->purchase_price_sum = $stock->purchase_price * $stock->pcs;//dodao 02.12.2024.
+
         $stock->price = $request->price;
         $stock->margin = ($stock->price / $stock->purchase_price -1) * 100;
         $stock->margin = round($stock->margin, 2);
@@ -231,6 +235,7 @@ class HomeController extends Controller
         $stock = Stock::where('code', $request->code)->first();
         $stock->pcs = $stock->pcs - $request->pcs;
         $stock->sum = $stock->price * $stock->pcs;
+        $stock->purchase_price_sum = $stock->pcs * $stock->purchase_price;//dodao 02.12.2024.
         $stock->update();
 
         $search_data = Output::where('date_of_turnover', $search_date)->orderby('id')->get();
@@ -273,6 +278,7 @@ class HomeController extends Controller
         $update_article = Stock::where('code', $code)->first(); // artikal cije se stanje na lageru menja
         $update_article->pcs -= $delete_article->pcs;
         $update_article->sum = $update_article->pcs * $update_article->price;
+        $update_article->purchase_price_sum = $update_article->pcs * $update_article->purchase_price; //dodao 02.12.2024.
 
         $update_article->update();
         $delete_article->delete();
@@ -292,6 +298,7 @@ class HomeController extends Controller
         $update_article = Stock::where('code', $delete_article->code)->first(); // artikal cije se stanje na lageru menja
         $update_article->pcs += $delete_article->pcs;
         $update_article->sum = $update_article->pcs * $update_article->price;
+        $update_article->purchase_price_sum = $update_article->pcs * $update_article->purchase_price; //dodao 02.12.2024.
         $update_article->update();
 
         $delete_article->delete();

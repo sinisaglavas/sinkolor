@@ -15,7 +15,7 @@
             </div>
             <div class="col-3">
                 <button class="btn btn-success form-control">Ukupno nabavna:
-                    <span>{{ \Illuminate\Support\Facades\DB::table('stocks')->sum('purchase_price') }}</span></button>
+                    <span>{{ \Illuminate\Support\Facades\DB::table('stocks')->sum('purchase_price_sum') }}</span></button>
             </div>
             <div class="col-3">
                 <button class="btn btn-success form-control">Ukupno na lageru:
@@ -48,6 +48,7 @@
                     <th>Stanje</th>
                     <th>JM</th>
                     <th>Nabavna cena</th>
+                    <th>Nabavna ukupno</th>
                     <th>Marža</th>
                     <th>Cena</th>
                     <th>Ukupno</th>
@@ -66,6 +67,7 @@
                         @endif
                         <td>{{ $search_stock->unit }}</td>
                         <td>{{ $search_stock->purchase_price }}</td>
+                        <td>{{ $search_stock->purchase_price_sum }}</td>
                         <td>{{ $search_stock->margin }}</td>
                         <td>{{ $search_stock->price }}</td>
                         <td>{{ $search_stock->sum }}</td>
@@ -83,6 +85,7 @@
                 <th>Stanje</th>
                 <th>JM</th>
                 <th>Nabavna cena</th>
+                <th>Nabavna ukupno</th>
                 <th>Marža</th>
                 <th>Cena</th>
                 <th>Ukupno</th>
@@ -101,6 +104,7 @@
                     @endif
                     <td>{{ $all_stock->unit }}</td>
                     <td>{{ $all_stock->purchase_price }}</td>
+                    <td>{{ $all_stock->purchase_price_sum }}</td>
                     <td>{{ $all_stock->margin }}</td>
                     <td>{{ $all_stock->price }}</td>
                     <td>{{ $all_stock->sum }}</td>
