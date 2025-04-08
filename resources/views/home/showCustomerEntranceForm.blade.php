@@ -78,7 +78,8 @@
                                required>
                         <button type="submit" class="btn btn-danger form-control mt-4">Snimi</button>
                     </form>
-                    <a href="/home/invoice-review/{{ $invoice->id }}" class="btn btn-danger form-control mt-2">Pogledaj fakturu</a>
+                    <a href="{{ route('generatePDF', $invoice->id) }}"
+                       class="btn btn-danger form-control mt-2" target="_blank">Štampa-PDF</a>
                 </div>
             </div>
             <div class="col-1"></div>
@@ -117,7 +118,6 @@
     </div>
 
     <script>
-
         function writeDataInList(array) {
             document.getElementById('list').innerHTML = "";
             if (array.length === 0) {
@@ -159,7 +159,6 @@
 
         }
 
-
         window.addEventListener('load', function () {
             fetch('/api/stock')
                 .then(res => res.json())
@@ -180,13 +179,7 @@
             });
         });
 
-
     </script>
-
-
-
-
-
 @endsection
 
 

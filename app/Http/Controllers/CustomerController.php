@@ -85,15 +85,6 @@ class CustomerController extends Controller
 
     }
 
-    public function invoiceReview($id)
-    {
-        $invoice = CustomerInvoice::find($id);
-        $customer = Customer::find($invoice->customer_id);
-        $outputs = CustomerOutput::where('invoice_id', $invoice->id)->get();
-        $total_per_invoice = CustomerOutput::where('invoice_id', $invoice->id)->sum('sum');
-        return view('home.invoiceReview', compact('customer', 'outputs', 'total_per_invoice', 'invoice'));
-    }
-
     public function allCustomerInvoices()
     {
         $customers = Customer::all();

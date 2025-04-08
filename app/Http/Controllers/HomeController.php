@@ -238,7 +238,7 @@ class HomeController extends Controller
         $stock->purchase_price_sum = $stock->pcs * $stock->purchase_price;//dodao 02.12.2024.
         $stock->update();
 
-        $search_data = Output::where('date_of_turnover', $search_date)->orderby('id')->get();
+        $search_data = Output::where('date_of_turnover', $search_date)->orderby('id', 'ASC')->get();
         $sum = DB::table('outputs')->where('date_of_turnover', $search_date)
             ->select('sum')->sum('sum'); // dobijamo ukupan promet na trazeni dan
 
@@ -255,9 +255,11 @@ class HomeController extends Controller
 
     public function requestedDay(Request $request) {
         $search_date = $request->date;
-        $search_data = Output::where('date_of_turnover', $search_date)->get();
+        $search_data = Output::where('date_of_turnover', $search_date)->orderBy('id', 'ASC')->get();
         $sum = DB::table('outputs')->where('date_of_turnover', $search_date)
             ->select('sum')->sum('sum'); // dobijamo ukupan promet na trazeni dan
+       // session()->flash('from_method', 'requestedDay'); //koristimo za uslov u requestedDay.blade
+        session()->put('from_method', 'requestedDay2'); //koristimo za uslov u requestedDay.blade
 
         return view('home.requestedDay', compact('search_data', 'search_date', 'sum'));
 
@@ -265,10 +267,22 @@ class HomeController extends Controller
 
     public function requestedDay2($search_date)
     {
-        $search_data = Output::where('date_of_turnover', $search_date)->get();
+        $search_data = Output::where('date_of_turnover', $search_date)->orderBy('id', 'ASC')->get();
         $sum = DB::table('outputs')->where('date_of_turnover', $search_date)
             ->select('sum')->sum('sum'); // dobijamo ukupan promet na trazeni dan
+       // session()->flash('from_method', 'requestedDay2');
+        session()->put('from_method', 'requestedDay2'); //koristimo za uslov u requestedDay.blade
+        return view('home.requestedDay', compact('search_data', 'search_date', 'sum'));
+    }
 
+    public function descendingArticle($search_date)
+    {
+        $search_data = Output::where('date_of_turnover', $search_date)->orderBy('id', 'DESC')->get();
+        $sum = DB::table('outputs')->where('date_of_turnover', $search_date)
+            ->select('sum')->sum('sum'); // dobijamo ukupan promet na trazeni dan
+       // session()->flash('search_date', $search_date); // Čuvamo datum pretrage
+        //session()->flash('from_method', 'descendingArticle');
+        session()->put('from_method', 'descendingArticle'); //koristimo za uslov u requestedDay.blade - umesto flash() koristite put() tako da podaci ostanu u sesiji dok se ručno ne obrišu
         return view('home.requestedDay', compact('search_data', 'search_date', 'sum'));
     }
 
@@ -383,18 +397,35 @@ class HomeController extends Controller
     public function searchStock(Request $request)
     {
         $request->validate([
-            'code_article'=>'required'
+            'name'=>'required'
         ]);
-        $request = $request->code_article;
-        $stock_exists = Stock::where('code', 'LIKE', $request)->exists();
         $all_stocks = Stock::all();
-
+        $request = $request->name;
+        $stock_exists = Stock::where('code', 'LIKE', $request)->exists();
+        $name_exists = Stock::where('article', 'LIKE', '%'.$request.'%')->exists();
         if ($stock_exists && $request != "") {
             $search_stocks = Stock::where('code', 'LIKE', $request)->get();
             return view('home.stock', compact('search_stocks', 'all_stocks'));
-        }elseif ($stock_exists == false || $request == "") {
+        }elseif ($name_exists && $request != ""){
+            $search_stocks = Stock::where('article','LIKE','%'.$request.'%')->get();//carobna linija koda
+            return view('home.stock', compact('search_stocks', 'all_stocks'));
+        }elseif ($stock_exists == false || $name_exists == false || $request == "") {
             return view('home.stock', compact('all_stocks'));
         }
+
+//        if ($name_exists && $request != ""){
+//            $search_clients = Debtor::where('name','like','%'.$request.'%')->get();//carobna linija koda
+//            return view('home.allDebtors', compact('search_clients', 'all_debtors'));
+//        }elseif ($phone_exists && $request != ""){
+//            $search_clients = Debtor::where('client_phone','like','%'.$request.'%')->get();//carobna linija koda
+//            return view('home.allDebtors', compact('search_clients', 'all_debtors'));
+//        }elseif ($request == ""){
+//            return view('home.allDebtors', compact('all_debtors'));
+//        }
+//        elseif ($name_exists == false || $phone_exists == false){
+//            return view('home.allDebtors', compact('all_debtors'));
+//
+//        }
 
     }
 

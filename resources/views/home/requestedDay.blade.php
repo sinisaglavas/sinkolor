@@ -74,7 +74,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td><input type="text" name="code" id="code" placeholder="Unesi šifru" class="form-control" required"></td>
+                                <td><input type="text" name="code" id="code" placeholder="Unesi šifru" class="form-control" autofocus required></td>
                                 <td><input type="text" name="article" id="search" placeholder="Unesi slova artikla" class="form-control" required>
                                     <ul id="list" class="border m-0 p-0" style="display: none"></ul></td>
                                 <td><input type="number" step=".01" min="0" name="pcs" id="pcs"
@@ -90,16 +90,22 @@
                 </div>
             </div>
             <div class="row mt-5">
-                <div class="col-12">
-                    <h4 style="display: inline-block">{{ Carbon\Carbon::parse($search_date)->format('l j. F Y.') }}</h4>
-                    <h4 style="display:inline-block; float: right">Ukupno promet: {{ $sum }} dinara</h4>
+                <div class="col text-start">
+                    <h4>{{ Carbon\Carbon::parse($search_date)->format('l j. F Y.') }}</h4>
+                </div>
+                <div class="col text-center">
+                    <h4><a href="{{ route('home.requestedDay2', ['search_date'=>$search_date]) }}" class="btn btn-secondary">Uzlazno ↑</a>&nbsp;<a href="{{ route('home.descendingArticle', ['search_date'=>$search_date]) }}" class="btn btn-secondary">Silazno ↓</a></h4>
+                </div>
+                <div class="col text-end">
+                    <h4>Ukupno promet: {{ $sum }} dinara</h4>
                 </div>
             </div>
             <div class="row mt-2">
                 <div class="col-12 text-center">
-                    <table class="table table-striped-columns table-hover border-warning text-center">
+                    <table class="table table-striped-columns table-hover border border-warning text-center">
                         <thead>
                         <tr class="table table-secondary border-dark">
+                            <th>Id</th>
                             <th>Šifra</th>
                             <th>Artikal</th>
                             <th>Komada</th>
@@ -109,8 +115,10 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @if(session('from_method') == 'requestedDay2' || session('from_method') == 'requestedDay')
                         @foreach($search_data as $data)
                             <tr>
+                                <td>{{ $data->id }}</td>
                                 <td>{{ $data->code}}</td>
                                 <td>{{ $data->article }}</td>
                                 <td>{{ $data->pcs }}</td>
@@ -121,12 +129,29 @@
                                 </td>
                             </tr>
                         @endforeach
+                        @endif
+                        @if(session('from_method') == 'descendingArticle')
+                            @foreach($search_data as $data)
+                                <tr>
+                                    <td>{{ $data->id }}</td>
+                                    <td>{{ $data->code}}</td>
+                                    <td>{{ $data->article }}</td>
+                                    <td>{{ $data->pcs }}</td>
+                                    <td>{{ $data->price }}</td>
+                                    <td>{{ $data->sum }}</td>
+                                    <td><a href="{{ route('home.updateBeforeDelete2',['id'=>$data->id, 'search_date'=>$search_date]) }}" class="btn btn-sm btn-warning"
+                                           onclick="return confirm('Da li ste sigurni?')">Obriši</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     @endif
+
     <script>
         let pcs = document.getElementById('pcs');
         document.getElementById("save-data").addEventListener("click", function(event) {
@@ -154,7 +179,7 @@
             }
             for (let i = 0; i < array.length; i++) {
                 document.getElementById('list').innerHTML += '<li data-code = "' + array[i].code + '" data-article = "' + array[i].article + '" data-price = "' + array[i].price + '">'
-                    + 'Šifra ' + array[i].code + ' , ' + array[i].article + "</li>";
+                    + 'Šifra ' + array[i].code + ' , ' + array[i].article + ' , ' + 'Cena ' + array[i].price + "</li>";
             }
             let suggestions = document.querySelectorAll('#list li');
             for (let i = 0; i < suggestions.length; i++) {
@@ -265,12 +290,7 @@
                         writeDataInInput(data);
                     });
             })
-
         });
-
-
-
-
 
     </script>
 

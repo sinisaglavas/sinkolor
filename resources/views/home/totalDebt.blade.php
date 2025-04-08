@@ -10,7 +10,22 @@
                 <a href="{{ url('/home') }}" class="btn btn-secondary form-control mb-2">Glavni meni</a>
                 <a href="{{ url('/home/new-invoice-data') }}" class="btn btn-secondary form-control mb-2">Napravi novu
                     fakturu</a>
-                <a href="{{ route('home.all_invoices') }}" class="btn btn-secondary form-control mb-5">Sve fakture</a>
+                <a href="{{ route('home.all_invoices') }}" class="btn btn-secondary form-control mb-3">Sve fakture</a>
+                <div class="row">
+                    <div class="col-6">
+                        <h6>31.12.2024.</h6>
+                        <h6 class="small">Stanje lagera: &nbsp;<span>{{ \Illuminate\Support\Facades\DB::table('stocks')->sum('sum') }}</span></h6>
+                        <h6 class="small">Dug dobavljacima:  &nbsp;<span>{{ \App\Models\Invoice::sum('invoice_amount') - \App\Models\Payment::sum('invoice_payment') }}</span></h6>
+                        <h6 class="small">Realno stanje:  &nbsp;<span class="fw-bold">{{ \Illuminate\Support\Facades\DB::table('stocks')->sum('sum') - (\App\Models\Invoice::sum('invoice_amount') - \App\Models\Payment::sum('invoice_payment')) }}</span></h6>
+                    </div>
+                    <div class="col-6">
+                        <h6>31.12.2023.</h6>
+                        <h6 class="small">Stanje lagera: &nbsp;<span>{{ \Illuminate\Support\Facades\DB::table('stocks')->sum('sum') }}</span></h6>
+                        <h6 class="small">Dug dobavljacima:  &nbsp;<span>{{ \App\Models\Invoice::sum('invoice_amount') - \App\Models\Payment::sum('invoice_payment') }}</span></h6>
+                        <h6 class="small">Realno stanje:  &nbsp;<span class="fw-bold">{{ \Illuminate\Support\Facades\DB::table('stocks')->sum('sum') - (\App\Models\Invoice::sum('invoice_amount') - \App\Models\Payment::sum('invoice_payment')) }}</span></h6>
+                    </div>
+                </div>
+
             </div>
             <div class="col-1"></div>
             <div class="col-7">

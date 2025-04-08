@@ -43,7 +43,7 @@
             </div>
             <div class="col-1"></div>
             <div class="col-7 mt-2">
-                <img src="{{ asset('image/sin-kolor-logo-2.jpg') }}" alt="Slika" style="width: 800px; border-radius: 10px">
+                <img src="{{ asset('images/sin-kolor-logo-2.jpg') }}" alt="Slika" style="width: 800px; border-radius: 10px">
             </div>
         </div>
 

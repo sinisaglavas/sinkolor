@@ -30,8 +30,8 @@
                 <form action="{{ route('searchStock') }}" method="POST">
                     @csrf
                     <div class="input-group">
-                        <input type="text" name="code_article" class="form-control"
-                               placeholder="Ukucaj šifru artikla"
+                        <input type="text" name="name" class="form-control"
+                               placeholder="Ukucaj šifru artikla ili naziv"
                                aria-label="Search client" required>
                         <input type="submit" class="btn btn-outline-secondary" value="Traži">
                     </div>

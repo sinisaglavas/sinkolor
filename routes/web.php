@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,7 @@ Route::get('/home/invoice-payment/{id}', [App\Http\Controllers\HomeController::c
 
 Route::get('/home/edit-invoice-data/{id}', [App\Http\Controllers\HomeController::class, 'editInvoiceData'])->name('home.editInvoiceData');
 Route::get('/home/edit-customer-invoice-data/{id}', [App\Http\Controllers\CustomerController::class, 'editCustomerInvoiceData'])->name('home.editCustomerInvoiceData');
+Route::get('/home/descending-article/{search_date}', [App\Http\Controllers\HomeController::class, 'descendingArticle'])->name('home.descendingArticle');
 
 Route::put('/invoice/{id}/edit', [App\Http\Controllers\HomeController::class, 'updateInvoice'])->name('updateInvoice');
 Route::put('/customer-invoice/{id}/edit', [App\Http\Controllers\CustomerController::class, 'updateCustomerInvoice'])->name('updateCustomerInvoice');
@@ -69,15 +72,19 @@ Route::post('save-customer-invoice', [App\Http\Controllers\CustomerController::c
 Route::get('home/show-customer-entrance-form/{id}', [App\Http\Controllers\CustomerController::class, 'showCustomerEntranceForm'])->middleware('auth')
     ->name('home.showCustomerEntranceForm');
 Route::post('save-customer-output', [App\Http\Controllers\CustomerController::class, 'saveCustomerOutput'])->middleware('auth')->name('saveCustomerOutput');
-Route::get('/home/invoice-review/{id}', [App\Http\Controllers\CustomerController::class, 'invoiceReview']);
-Route::get('/home/all-customer-invoices', [App\Http\Controllers\CustomerController::class, 'allCustomerInvoices'])->middleware('auth')->name('home.allCustomerInvoices');
-Route::get('/home/one-customer-invoices/{id}', [App\Http\Controllers\CustomerController::class, 'oneCustomerInvoices'])->middleware('auth')->name('home.oneCustomerInvoices');
-Route::get('/home/customer-invoice-payment/{id}', [App\Http\Controllers\CustomerPaymentController::class, 'customerInvoicePayment'])->middleware('auth')->name('home.customerInvoicePayment');
-Route::get('/home/customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'customerInvoice'])->middleware('auth')->name('home.customerInvoice');
 Route::post('/home/add-customer-payment', [App\Http\Controllers\CustomerController::class, 'addCustomerPayment'])->name('home.addCustomerPayment');
-Route::get('/just-delete-article/{id}/{code}/{invoice_id}', [App\Http\Controllers\CustomerController::class, 'justDeleteArticle'])->name('justDeleteArticle');
-Route::get('/mark-customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'markCustomerInvoice'])->name('markCustomerInvoice')->middleware('auth');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home/all-customer-invoices', [App\Http\Controllers\CustomerController::class, 'allCustomerInvoices'])->middleware('auth')->name('home.allCustomerInvoices');
+    Route::get('/home/one-customer-invoices/{id}', [App\Http\Controllers\CustomerController::class, 'oneCustomerInvoices'])->middleware('auth')->name('home.oneCustomerInvoices');
+    Route::get('/home/customer-invoice-payment/{id}', [App\Http\Controllers\CustomerPaymentController::class, 'customerInvoicePayment'])->middleware('auth')->name('home.customerInvoicePayment');
+    Route::get('/home/customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'customerInvoice'])->middleware('auth')->name('home.customerInvoice');
+    Route::get('/just-delete-article/{id}/{code}/{invoice_id}', [App\Http\Controllers\CustomerController::class, 'justDeleteArticle'])->name('justDeleteArticle');
+    Route::get('/mark-customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'markCustomerInvoice'])->name('markCustomerInvoice')->middleware('auth');
+    Route::get('/generate-prescription/{id}', [App\Http\Controllers\PrescriptionController::class, 'generatePDF'])->
+    name('generatePDF');
 
 // Invoices controller
-Route::get('/mark-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'markInvoice'])->name('markInvoice')->middleware('auth');
+    Route::get('/mark-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'markInvoice'])->name('markInvoice')->middleware('auth');
+
+});
