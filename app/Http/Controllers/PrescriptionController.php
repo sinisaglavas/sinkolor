@@ -46,7 +46,7 @@ class PrescriptionController extends Controller
             $image = $result; // Ovo je binarni sadržaj QR koda kao PNG slike
             // Ako želiš da prikažeš QR kod u blade-u, koristi base64 encoding
             $imageData = base64_encode($image);
-          
+
             mb_internal_encoding("UTF-8");
             $pdf = PDF::loadView('pdf.prescription',
                 compact('customerInvoice', 'customer', 'customerOutput', 'total_per_invoice', 'imageData'))
