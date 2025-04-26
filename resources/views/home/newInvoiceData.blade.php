@@ -54,12 +54,15 @@
                         </div>
 
                     </div>
+<<<<<<< HEAD
 {{--                </form>--}}
 {{--                @if(isset($message))--}}
 {{--                    <div class="alert alert-success">--}}
 {{--                        {{ $message }}--}}
 {{--                    </div>--}}
 {{--                @endif--}}
+=======
+>>>>>>> e4bbb5e (kreiranje kupaca)
                 @if(session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}

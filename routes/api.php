@@ -4,6 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Stock;
 use App\Models\Output;
+<<<<<<< HEAD
+=======
+use App\Models\Invoice;
+>>>>>>> e4bbb5e (kreiranje kupaca)
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,3 +35,11 @@ Route::get('/code/{q}', function ($q, Request $request) {
     $code = Stock::where('code', 'LIKE', $q)->get();
     return $code;
 });
+<<<<<<< HEAD
+=======
+Route::get('/invoice/{q}', function ($q, Request $request) {
+   $invoice = Invoice::where('invoice_number', 'LIKE', $q)->with('supplier')->first();
+   return $invoice;
+});
+
+>>>>>>> e4bbb5e (kreiranje kupaca)

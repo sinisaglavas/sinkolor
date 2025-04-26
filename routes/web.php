@@ -23,8 +23,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/home/new-invoice-data', [App\Http\Controllers\HomeController::class, 'newInvoice'])->name('home.newInvoice');
 
+<<<<<<< HEAD
 Route::get('/home/stock', [App\Http\Controllers\HomeController::class, 'stock'])->name('home.stock');
 
+=======
+>>>>>>> e4bbb5e (kreiranje kupaca)
 Route::get('/home/show-stock-form', function (){ return view('home.showStockForm'); });
 
 Route::get('/stock/{id}/edit', [App\Http\Controllers\HomeController::class, 'editStock']);
@@ -57,3 +60,19 @@ Route::post('/save-entrance/{id}', [App\Http\Controllers\HomeController::class, 
 Route::post('/home/save-output/{search_date}', [App\Http\Controllers\HomeController::class, 'saveOutput'])->name('home.saveOutput');
 Route::post('/home/add-payment', [App\Http\Controllers\HomeController::class, 'addPayment'])->name('home.addPayment');
 Route::post('/search-stock', [App\Http\Controllers\HomeController::class, 'searchStock'])->name('searchStock');
+<<<<<<< HEAD
+=======
+
+Route::get('/home/stock', [App\Http\Controllers\StockController::class, 'stock'])->name('home.stock')->middleware('auth');
+
+
+Route::get('/home/new-customer-invoices', [App\Http\Controllers\InvoiceController::class, 'customerInvoices'])->middleware('auth');
+Route::get('/home/new-customer', [App\Http\Controllers\CustomerController::class, 'newCustomer'])->middleware('auth');
+Route::post('save-customer', [App\Http\Controllers\CustomerController::class, 'saveCustomer'])->middleware('auth');
+Route::post('save-customer-invoice', [App\Http\Controllers\CustomerController::class, 'saveCustomerInvoice'])->middleware('auth');
+Route::get('home/show-customer-entrance-form/{id}', [App\Http\Controllers\CustomerController::class, 'showCustomerEntranceForm'])->middleware('auth')
+    ->name('home.showCustomerEntranceForm');
+Route::post('save-customer-output', [App\Http\Controllers\CustomerController::class, 'saveCustomerOutput'])->middleware('auth')->name('saveCustomerOutput');
+Route::get('/home/invoice-review/{id}', [App\Http\Controllers\CustomerController::class, 'invoiceReview']);
+Route::get('/home/all-customer-invoices', [App\Http\Controllers\CustomerController::class, 'allCustomerInvoices'])->middleware('auth')->name('home.allCustomerInvoices');
+>>>>>>> e4bbb5e (kreiranje kupaca)

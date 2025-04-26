@@ -10,27 +10,47 @@
                 <a href="{{ url('/home') }}" class="btn btn-secondary form-control mb-2">Glavni meni</a>
                 <a href="{{ url('/home/new-invoice-data') }}" class="btn btn-secondary form-control mb-2">Napravi novu
                     fakturu</a>
+<<<<<<< HEAD
                 <a href="{{ route('home.totalDebt') }}" class="btn btn-secondary form-control mb-4">Dobavljači - Ukupan dug</a>
+=======
+                <a href="{{ route('home.totalDebt') }}" class="btn btn-secondary form-control mb-4">Dobavljači - Ukupan
+                    dug</a>
+>>>>>>> e4bbb5e (kreiranje kupaca)
                 <hr>
                 <h2>Uplata po fakturi</h2>
                 <form action="{{ route('home.addPayment') }}" method="post">
                     @csrf
                     <div class="row">
                         <div class="col">
+<<<<<<< HEAD
                             <label for="invoice_id">Id fakture</label>
                             <input type="number" name="invoice_id" id="invoice_id" class="form-control" min="1" required>
                         </div>
                         <div class="col">
                             <label for="supplier_id">Dobavljač</label>
                             <select class="form-control" name="supplier_id" id="supplier_id" required>
+=======
+                            <label for="invoice-id">Id fakture</label>
+                            <input type="number" name="invoice_id" id="invoice-id" class="form-control" required>
+                        </div>
+                        <div class="col">
+                            <label for="supplier-id">Dobavljač</label>
+                            <select class="form-control" name="supplier_id" id="supplier-id" required>
+>>>>>>> e4bbb5e (kreiranje kupaca)
                                 @foreach($suppliers as $supplier)
                                     <option value="{{ $supplier->id}}">{{ $supplier->supplier }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+<<<<<<< HEAD
                     <label for="invoice_payment">Iznos uplate</label>
                     <input type="number" step=".01" name="invoice_payment" id="invoice_payment" class="form-control" min="1" required>
+=======
+                    <label for="invoice-payment">Iznos uplate</label>
+                    <input type="number" step=".01" name="invoice_payment" id="invoice-payment" class="form-control"
+                           min="1" required>
+>>>>>>> e4bbb5e (kreiranje kupaca)
                     <button type="submit" class="btn btn-secondary form-control mt-4">Snimi</button>
                 </form>
                 @if(session()->has('message'))
@@ -56,6 +76,7 @@
                     </tr>
                     </thead>
                     @foreach($all_invoices as $invoice)
+<<<<<<< HEAD
                     <tbody>
                     @if($invoice->invoice_amount - \App\Models\Payment::where('invoice_id', $invoice->id)->where('supplier_id', $invoice->supplier_id)->sum('invoice_payment')  <= 0)
                     <tr style="background-color: #C8FFC6">
@@ -85,14 +106,60 @@
                         </tr>
                     @endif
                     </tbody>
+=======
+                        <tbody>
+                        @if($invoice->invoice_amount - \App\Models\Payment::where('invoice_id', $invoice->id)->where('supplier_id', $invoice->supplier_id)->sum('invoice_payment')  <= 0)
+                            <tr style="background-color: #C8FFC6">
+                                <th scope="row">{{ $invoice->id }}</th>
+                                <td>{{ Carbon\Carbon::parse($invoice->invoicing_date)->format('d. M. Y.') }}</td>
+                                <td><a href="{{ route('home.supplier_invoices', ['id'=>$invoice->supplier_id]) }}"
+                                       style="text-decoration: none">{{ \App\Models\Supplier::find($invoice->supplier_id)->supplier }}</a>
+                                </td>
+                                <td><a href="{{ route('home.invoice', ['id'=>$invoice->id]) }}"
+                                       style="text-decoration: none;">{{ $invoice->invoice_number }}</a></td>
+                                <td>{{ $invoice->invoice_amount }}</td>
+                                <td>{{ $paid = \App\Models\Payment::where('invoice_id', $invoice->id)->where('supplier_id', $invoice->supplier_id)->sum('invoice_payment') }}</td>
+                                <td>{{ $invoice->invoice_amount - $paid }}</td>
+                                <td><a href="{{ route('home.editInvoiceData',['id'=>$invoice->id]) }}"
+                                       class="btn btn-sm btn-warning"
+                                       onclick="return confirm('Da li ste sigurni?')">Promeni</a>
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <th scope="row">{{ $invoice->id }}</th>
+                                <td>{{ Carbon\Carbon::parse($invoice->invoicing_date)->format('d. M. Y.') }}</td>
+                                <td><a href="{{ route('home.supplier_invoices', ['id'=>$invoice->supplier_id]) }}"
+                                       style="text-decoration: none;">{{ \App\Models\Supplier::find($invoice->supplier_id)->supplier }}</a>
+                                </td>
+                                <td><a href="{{ route('home.invoice', ['id'=>$invoice->id]) }}"
+                                       style="text-decoration: none;">{{ $invoice->invoice_number }}</a></td>
+                                <td>{{ $invoice->invoice_amount }}</td>
+                                <td>{{ $paid = \App\Models\Payment::where('invoice_id', $invoice->id)->where('supplier_id', $invoice->supplier_id)->sum('invoice_payment') }}</td>
+                                <td style="color: red">{{ $invoice->invoice_amount - $paid }}</td>
+                                <td><a href="{{ route('home.editInvoiceData',['id'=>$invoice->id]) }}"
+                                       class="btn btn-sm btn-warning"
+                                       onclick="return confirm('Da li ste sigurni?')">Promeni</a>
+                                </td>
+                            </tr>
+                        @endif
+                        </tbody>
+>>>>>>> e4bbb5e (kreiranje kupaca)
                     @endforeach
                 </table>
             </div>
         </div>
 
+<<<<<<< HEAD
 
     </div>
 
 
+=======
+    </div>
+
+
+
+>>>>>>> e4bbb5e (kreiranje kupaca)
 @endsection
 

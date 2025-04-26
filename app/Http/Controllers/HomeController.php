@@ -36,6 +36,7 @@ class HomeController extends Controller
         return view('home');
     }
 
+<<<<<<< HEAD
     public function stock()
     {
         $all_stocks = Stock::all();
@@ -55,18 +56,52 @@ class HomeController extends Controller
         $new_stock->code = $request->code;
         $new_stock->article = $request->article;
         $new_stock->unit = $request->unit;
+=======
+
+
+    public function saveStock(Request $request)
+    {
+        $article = Stock::where('code', $request->code)->first();// provera da li postoji u bazi
+
+        if (isset($article)){
+            return redirect()->back()->with('message','Artikal NE MOŽE biti snimljen, jer postoji u bazi podataka!');
+        }else {
+            $request->validate([
+                'code'=>'required',
+                'article'=>'required',
+                'unit'=>'required',
+                'price'=>'required'
+            ]);
+            $new_stock = new Stock();
+            $new_stock->code = $request->code;
+            $new_stock->article = $request->article;
+            $new_stock->unit = $request->unit;
+>>>>>>> e4bbb5e (kreiranje kupaca)
 //        if ($request->purchase_price != null){
 //            $new_stock->purchase_price = $request->purchase_price;
 //        }
 //        if ($request->purchase_price > 0){
 //            $new_stock->margin = ($request->price - $request->purchase_price) / $request->purchase_price * 100;
 //        }
+<<<<<<< HEAD
         $new_stock->price = $request->price;
 //        $new_stock->sum = $request->pcs * $request->price;
         $new_stock->save();
         return redirect()->back()->with('message','Novi artikal je snimljen');
 
     }
+=======
+            $new_stock->price = $request->price;
+//        $new_stock->sum = $request->pcs * $request->price;
+            $new_stock->save();
+            return redirect()->back()->with('message','Novi artikal je snimljen');
+
+        }
+
+        }
+
+
+>>>>>>> e4bbb5e (kreiranje kupaca)
 
     public function editStock($id)
     {

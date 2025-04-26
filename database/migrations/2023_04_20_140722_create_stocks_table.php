@@ -19,7 +19,11 @@ class CreateStocksTable extends Migration
             $table->string('article');
             $table->string('unit');
             $table->decimal('purchase_price', 10, 2, true)->nullable();
+<<<<<<< HEAD
             $table->decimal('margin', 5, 2)->nullable();
+=======
+            $table->decimal('margin', 10, 2)->nullable();
+>>>>>>> e4bbb5e (kreiranje kupaca)
             $table->decimal('price', 10, 2, true)->nullable();
             $table->decimal('pcs', 10, 2)->nullable(); // bez "true" ako zelis da decimalni broj ide u minus
             $table->decimal('sum', 10, 2)->nullable();

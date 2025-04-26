@@ -13,6 +13,10 @@
         "laravel/ui": "*"
     },
     "require-dev": {
+<<<<<<< HEAD
+=======
+        "barryvdh/laravel-debugbar": "^3.7",
+>>>>>>> e4bbb5e (kreiranje kupaca)
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",

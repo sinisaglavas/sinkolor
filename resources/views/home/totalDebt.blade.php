@@ -14,7 +14,13 @@
             </div>
             <div class="col-1"></div>
             <div class="col-7">
+<<<<<<< HEAD
                 <h2>Ukupan dug po svim fakturama</h2>
+=======
+                <h2>Ukupan dug po svim fakturama:
+                    <span class="btn btn-success" style="font-size: 18px">{{ \App\Models\Invoice::sum('invoice_amount') - \App\Models\Payment::sum('invoice_payment') }}</span>
+                </h2>
+>>>>>>> e4bbb5e (kreiranje kupaca)
                 <table class="table text-center">
                     <thead>
                     <tr>
