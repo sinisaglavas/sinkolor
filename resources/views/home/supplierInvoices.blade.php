@@ -51,16 +51,10 @@
                                 <th scope="row">{{ $supplier_invoice->id }}</th>
                                 <td>{{ Carbon\Carbon::parse($supplier_invoice->invoicing_date)->format('d. M. Y.') }}</td>
                                 <td>{{ \App\Models\Supplier::find($supplier_invoice->supplier_id)->supplier }}</td>
-<<<<<<< HEAD
-                                <td><a href="{{ route('home.invoice_payment', ['id'=>$supplier_invoice->id]) }}"
-                                       class="text-decoration-none">{{ $supplier_invoice->invoice_number }}</a></td>
-                                <td>{{ $supplier_invoice->invoice_amount }}</td>
-=======
                                 <td><a href="{{ route('home.invoice', ['id'=>$supplier_invoice->id]) }}" title="Pogledaj fakturu"
                                        style="text-decoration: none;">{{ $supplier_invoice->invoice_number }}</a></td>
                                 <td><a href="{{ route('home.invoice_payment', ['id'=>$supplier_invoice->id]) }}" title="Klik na datum uplate"
                                        class="text-decoration-none">{{ $supplier_invoice->invoice_amount }}</a></td>
->>>>>>> e4bbb5e (kreiranje kupaca)
                                 <td>{{ $paid = \App\Models\Payment::where('invoice_id', $supplier_invoice->id)->where('supplier_id', $supplier_invoice->supplier_id)->sum('invoice_payment') }}</td>
                                 <td>{{ $supplier_invoice->invoice_amount - $paid }}</td>
                             </tr>
@@ -69,16 +63,10 @@
                                 <th scope="row">{{ $supplier_invoice->id }}</th>
                                 <td>{{ Carbon\Carbon::parse($supplier_invoice->invoicing_date)->format('d. M. Y.') }}</td>
                                 <td>{{ \App\Models\Supplier::find($supplier_invoice->supplier_id)->supplier }}</td>
-<<<<<<< HEAD
-                                <td><a href="{{ route('home.invoice_payment', ['id'=>$supplier_invoice->id]) }}"
-                                       class="text-decoration-none">{{ $supplier_invoice->invoice_number }}</a></td>
-                                <td>{{ $supplier_invoice->invoice_amount }}</td>
-=======
                                 <td><a href="{{ route('home.invoice', ['id'=>$supplier_invoice->id]) }}" title="Pogledaj fakturu"
                                        style="text-decoration: none;">{{ $supplier_invoice->invoice_number }}</a></td>
                                 <td><a href="{{ route('home.invoice_payment', ['id'=>$supplier_invoice->id]) }}" title="Klik na datum uplate"
                                        class="text-decoration-none">{{ $supplier_invoice->invoice_amount }}</a></td>
->>>>>>> e4bbb5e (kreiranje kupaca)
                                 <td>{{ $paid = \App\Models\Payment::where('invoice_id', $supplier_invoice->id)->where('supplier_id', $supplier_invoice->supplier_id)->sum('invoice_payment') }}</td>
                                 <td style="color: red">{{ $supplier_invoice->invoice_amount - $paid }}</td>
                             </tr>

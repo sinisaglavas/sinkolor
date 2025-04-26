@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +25,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/home/new-invoice-data', [App\Http\Controllers\HomeController::class, 'newInvoice'])->name('home.newInvoice');
 
-<<<<<<< HEAD
-Route::get('/home/stock', [App\Http\Controllers\HomeController::class, 'stock'])->name('home.stock');
-
-=======
->>>>>>> e4bbb5e (kreiranje kupaca)
 Route::get('/home/show-stock-form', function (){ return view('home.showStockForm'); });
 
 Route::get('/stock/{id}/edit', [App\Http\Controllers\HomeController::class, 'editStock']);
@@ -51,7 +48,11 @@ Route::get('/home/get-month/{id}', [App\Http\Controllers\HomeController::class, 
 Route::get('/home/invoice-payment/{id}', [App\Http\Controllers\HomeController::class, 'invoice_payment'])->name('home.invoice_payment');
 
 Route::get('/home/edit-invoice-data/{id}', [App\Http\Controllers\HomeController::class, 'editInvoiceData'])->name('home.editInvoiceData');
+Route::get('/home/edit-customer-invoice-data/{id}', [App\Http\Controllers\CustomerController::class, 'editCustomerInvoiceData'])->name('home.editCustomerInvoiceData');
+Route::get('/home/descending-article/{search_date}', [App\Http\Controllers\HomeController::class, 'descendingArticle'])->name('home.descendingArticle');
+
 Route::put('/invoice/{id}/edit', [App\Http\Controllers\HomeController::class, 'updateInvoice'])->name('updateInvoice');
+Route::put('/customer-invoice/{id}/edit', [App\Http\Controllers\CustomerController::class, 'updateCustomerInvoice'])->name('updateCustomerInvoice');
 
 Route::post('/home/add-supplier', [App\Http\Controllers\HomeController::class, 'add_supplier'])->name('home.addSupplier');
 Route::post('/save-stock',[App\Http\Controllers\HomeController::class,'saveStock'])->name('saveStock');
@@ -60,8 +61,6 @@ Route::post('/save-entrance/{id}', [App\Http\Controllers\HomeController::class, 
 Route::post('/home/save-output/{search_date}', [App\Http\Controllers\HomeController::class, 'saveOutput'])->name('home.saveOutput');
 Route::post('/home/add-payment', [App\Http\Controllers\HomeController::class, 'addPayment'])->name('home.addPayment');
 Route::post('/search-stock', [App\Http\Controllers\HomeController::class, 'searchStock'])->name('searchStock');
-<<<<<<< HEAD
-=======
 
 Route::get('/home/stock', [App\Http\Controllers\StockController::class, 'stock'])->name('home.stock')->middleware('auth');
 
@@ -73,6 +72,24 @@ Route::post('save-customer-invoice', [App\Http\Controllers\CustomerController::c
 Route::get('home/show-customer-entrance-form/{id}', [App\Http\Controllers\CustomerController::class, 'showCustomerEntranceForm'])->middleware('auth')
     ->name('home.showCustomerEntranceForm');
 Route::post('save-customer-output', [App\Http\Controllers\CustomerController::class, 'saveCustomerOutput'])->middleware('auth')->name('saveCustomerOutput');
-Route::get('/home/invoice-review/{id}', [App\Http\Controllers\CustomerController::class, 'invoiceReview']);
-Route::get('/home/all-customer-invoices', [App\Http\Controllers\CustomerController::class, 'allCustomerInvoices'])->middleware('auth')->name('home.allCustomerInvoices');
->>>>>>> e4bbb5e (kreiranje kupaca)
+Route::post('/home/add-customer-payment', [App\Http\Controllers\CustomerController::class, 'addCustomerPayment'])->name('home.addCustomerPayment');
+Route::post('/send-to-sef/{id}', [App\Http\Controllers\EfakturaLogController::class, 'sendToSef'])->name('sendToSef');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home/all-customer-invoices', [App\Http\Controllers\CustomerController::class, 'allCustomerInvoices'])->middleware('auth')->name('home.allCustomerInvoices');
+    Route::get('/home/one-customer-invoices/{id}', [App\Http\Controllers\CustomerController::class, 'oneCustomerInvoices'])->middleware('auth')->name('home.oneCustomerInvoices');
+    Route::get('/home/customer-invoice-payment/{id}', [App\Http\Controllers\CustomerPaymentController::class, 'customerInvoicePayment'])->middleware('auth')->name('home.customerInvoicePayment');
+    Route::get('/home/customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'customerInvoice'])->middleware('auth')->name('home.customerInvoice');
+    Route::get('/just-delete-article/{id}/{code}/{invoice_id}', [App\Http\Controllers\CustomerController::class, 'justDeleteArticle'])->name('justDeleteArticle');
+    Route::get('/mark-customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'markCustomerInvoice'])->name('markCustomerInvoice')->middleware('auth');
+    Route::get('/generate-prescription/{id}', [App\Http\Controllers\PrescriptionController::class, 'generatePDF'])->
+    name('generatePDF');
+// Invoices controller
+    Route::get('/mark-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'markInvoice'])->name('markInvoice')->middleware('auth');
+ // EfakturaLogController
+    Route::get('/efaktura-logs', [App\Http\Controllers\EfakturaLogController::class, 'index'])->name('efaktura.logs');
+    Route::post('/efaktura-resend/{invoice}', [\App\Http\Controllers\EfakturaLogController::class, 'resend'])->name('efaktura.resend');
+
+    Route::get('/test-xml/{invoiceId}', [App\Http\Controllers\EfakturaLogController::class, 'testXml']);
+
+});

@@ -8,10 +8,7 @@
                     <a href="{{ url('/home') }}" class="btn btn-secondary form-control">Glavni meni</a>
                 </div>
                 <div class="row mt-2">
-                    <a href="{{ url('/home/turnover-by-days') }}" class="btn btn-secondary form-control">Izlaz robe - Promet</a>
-                </div>
-                <div class="row mt-2">
-                    <a href="{{ route('home.allCustomerInvoices') }}" class="btn btn-secondary form-control mb-5">Sve fakture kupaca</a>
+                    <a href="{{ route('home.allCustomerInvoices') }}" class="btn btn-danger form-control mb-5">Sve fakture kupaca</a>
                 </div>
             </div>
             <div class="col-2"></div>
@@ -28,7 +25,7 @@
                             </select>
                         </div>
                         <div class="col-4">
-                            <a href="{{ url('/home/new-customer') }}" class="btn btn-secondary form-control mt-4">Novi kupac</a>
+                            <a href="{{ url('/home/new-customer') }}" class="btn btn-danger form-control mt-4">Novi kupac</a>
                         </div>
                     </div>
                     <div class="row">
@@ -44,7 +41,7 @@
                         <input type="text" name="invoice_number" class="form-control" id="invoice_number" required>
                         <div class="row">
                             <div class="col">
-                                <button class="btn btn-warning form-control mt-3">Snimi</button>
+                                <button class="btn btn-danger form-control mt-3">Snimi</button>
                             </div>
                             <div class="col">
                                 @if(isset($invoice))

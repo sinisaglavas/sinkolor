@@ -17,12 +17,7 @@
                     @csrf
                     <label for="code">Sifra</label>
                     <input type="number" name="code" id="code" placeholder="Unos je obavezan" class="form-control" min="1"
-<<<<<<< HEAD
-
-                          value="{{ \App\Models\Stock::orderBy('id', 'DESC')->first()->code + 1 }}" required>
-=======
                            value="{{ \App\Models\Stock::orderBy('id', 'DESC')->first()->code + 1 }}" required>
->>>>>>> e4bbb5e (kreiranje kupaca)
                     <label for="article">Artikal</label>
                     <input type="text" name="article" id="article" placeholder="Unos je obavezan" class="form-control" required>
                     <label for="unit">Jedinica Mere</label>

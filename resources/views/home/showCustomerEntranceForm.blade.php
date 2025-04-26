@@ -28,9 +28,8 @@
         <div class="row">
             <div class="col-4">
                 <a href="{{ url('/home') }}" class="btn btn-secondary form-control mb-2">Glavni meni</a>
-                <a href="{{ url('/home/new-invoice-data') }}" class="btn btn-secondary form-control mb-2">Napravi novu
-                    fakturu</a>
-                <a href="{{ route('home.allCustomerInvoices') }}" class="btn btn-secondary form-control mb-5">Sve fakture kupaca</a>
+                <a href="{{ url('/home/new-customer-invoices') }}" class="btn btn-danger form-control mb-2">Nova faktura kupca</a>
+                <a href="{{ route('home.allCustomerInvoices') }}" class="btn btn-danger form-control mb-2">Sve fakture kupaca</a>
                 <div class="col">Dobavljač: &nbsp; &nbsp; &nbsp;<span
                         style="font-weight: bold; font-size: 17px">{{ \App\Models\Customer::find($invoice->customer_id)->customer }}</span>
                 </div>
@@ -77,9 +76,21 @@
                         <label for="sum">Ukupno</label>
                         <input type="number" step=".01" min="0" name="sum" id="sum" class="form-control" readonly
                                required>
-                        <button type="submit" class="btn btn-secondary form-control mt-4">Snimi</button>
+                        <button type="submit" class="btn btn-danger form-control mt-4">Snimi</button>
                     </form>
-                    <a href="/home/invoice-review/{{ $invoice->id }}" class="btn btn-secondary form-control mt-2">Pogledaj fakturu</a>
+                    <div class="row">
+                        <div class="col">
+                            <form action="{{ route('sendToSef', $invoice->id) }}" method="post" class="mt-2">
+                                @csrf
+                                <button type="submit" class="btn btn-danger form-control">Pošalji fakturu u SEF</button>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <a href="{{ route('generatePDF', $invoice->id) }}" class="btn btn-danger form-control mt-2"
+                               target="_blank">Štampa-PDF
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-1"></div>
@@ -104,8 +115,8 @@
                                 <td>{{ $output->pcs }}</td>
                                 <td>{{ $output->price }}</td>
                                 <td>{{ $output->sum }}</td>
-                                <td><a href="{{ route('home.updateBeforeDelete', ['id'=>$output->id, 'code'=>$output->code, 'invoice_id'=>$invoice->id]) }}" class="btn btn-sm btn-warning"
-                                       onclick="return confirm('Da li ste sigurni?')">Obrisi</a>
+                                <td><a href="{{ route('justDeleteArticle', ['id'=>$output->id, 'code'=>$output->code, 'invoice_id'=>$invoice->id]) }}" class="btn btn-sm btn-warning"
+                                        onclick="return confirm('Da li ste sigurni?')">Obrisi</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -118,7 +129,6 @@
     </div>
 
     <script>
-
         function writeDataInList(array) {
             document.getElementById('list').innerHTML = "";
             if (array.length === 0) {
@@ -160,7 +170,6 @@
 
         }
 
-
         window.addEventListener('load', function () {
             fetch('/api/stock')
                 .then(res => res.json())
@@ -181,13 +190,7 @@
             });
         });
 
-
     </script>
-
-
-
-
-
 @endsection
 
 

@@ -19,6 +19,9 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
+        // Dodaj ovo u handle() metodu:
+        header('Content-Type: text/html; charset=utf-8'); //dodao naknadno
+
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
