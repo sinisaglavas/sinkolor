@@ -221,9 +221,6 @@
             });
         }
 
-
-
-
         window.addEventListener('load', function () {
             fetch('/api/stock')
                 .then(res => res.json())
