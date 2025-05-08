@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "*",
         "simplesoftwareio/simple-qrcode": "^2.0",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+      "ext-dom": "*"
     },
     "require-dev": {
         "facade/ignition": "2.5",

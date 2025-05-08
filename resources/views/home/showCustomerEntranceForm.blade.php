@@ -80,17 +80,32 @@
                     </form>
                     <div class="row">
                         <div class="col">
-                            <form action="{{ route('sendToSef', $invoice->id) }}" method="post" class="mt-2">
-                                @csrf
-                                <button type="submit" class="btn btn-danger form-control">Pošalji fakturu u SEF</button>
-                            </form>
-                        </div>
-                        <div class="col">
                             <a href="{{ route('generatePDF', $invoice->id) }}" class="btn btn-danger form-control mt-2"
                                target="_blank">Štampa-PDF
                             </a>
                         </div>
                     </div>
+                        <div class="row">
+                            <div class="col">
+                                <form action="{{ route('sendToSef', $invoice->id) }}" method="post" class="mt-2">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger form-control">Pošalji fakturu u SEF</button>
+                                </form>
+                                @if(session()->has('success'))
+                                    <div class="alert alert-success mt-1 p-1">
+                                        {{ session()->get('success') }}
+                                    </div>
+                                @endif
+                                @if(session()->has('error'))
+                                    <div class="alert alert-success mt-1 p-1">
+                                        {{ session()->get('error') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="col">
+                                <a href="{{ route('efakturaLogs') }}" class="btn btn-danger form-control mt-2">Efaktura-provera</a>
+                            </div>
+                        </div>
                 </div>
             </div>
             <div class="col-1"></div>

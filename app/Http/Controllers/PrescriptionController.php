@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\CustomerInvoice;
 use App\Models\CustomerOutput;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -75,6 +76,44 @@ class PrescriptionController extends Controller
             return $pdf->stream("Faktura za {$customer->customer}.pdf");
 
         }
+    }
+
+    public function generateCodebookPDF()
+    {
+        Carbon::setLocale('sr');
+        ini_set('max_execution_time', 300);
+
+        $all_stocks = Stock::select('code', 'article')->orderBy('code')->get();
+
+        $itemsPerColumn = 100;
+        $columns = $all_stocks->chunk($itemsPerColumn)->values();
+
+        $pages = [];
+
+        for ($i = 0; $i < $columns->count(); $i += 3) {
+            $page = [
+                $columns->get($i) ?? collect(),
+                $columns->get($i + 1) ?? collect(),
+                $columns->get($i + 2) ?? collect(),
+            ];
+            $pages[] = $page;
+        }
+
+        mb_internal_encoding("UTF-8");
+        $pdf = PDF::loadView('pdf.codeBook',
+            compact('pages'))
+            ->setPaper('A4', 'portrait')
+            ->setOptions([
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => true,  // PHP PARSER
+                'enable_remote' => true,  // Omogućava slike
+                'chroot' => realpath(base_path('public')), // Apsolutna putanja
+                'defaultFont' => 'dejavu sans',
+                'isRemoteEnabled' => true,
+                // 'debugCss' => true  // Uklonite nakon debug-a
+            ]);
+
+        return $pdf->stream("Sifarnik.pdf");
     }
 
 }

@@ -16,11 +16,7 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_number');
-<<<<<<< HEAD
             $table->decimal('invoice_amount', 10, 2, true); // true - spracavanje negativnih brojeva
-=======
-            $table->decimal('invoice_amount', 10, 2, true); // true - sprecavanje negativnih brojeva
->>>>>>> e4bbb5e (kreiranje kupaca)
             $table->date('invoicing_date');
             $table->unsignedBigInteger('supplier_id');
             $table->foreign('supplier_id')->references('id')->on('suppliers');

@@ -23,10 +23,16 @@
             </div>
         </div>
         <div class="row mt-4 mb-2">
-            <div class="col-7">
+            <div class="col-2">
                 <h5>Svi artikli - LAGER</h5>
             </div>
-            <div class="col-5">
+            <div class="col">
+                <a href="" class="btn btn-secondary w-50" target="_blank">Štampa lagera</a>
+            </div>
+            <div class="col">
+                <a href="{{ route('generateCodebookPDF') }}" class="btn btn-secondary w-50" target="_blank">Štampa šifarnika</a>
+            </div>
+            <div class="col">
                 <form action="{{ route('searchStock') }}" method="POST">
                     @csrf
                     <div class="input-group">

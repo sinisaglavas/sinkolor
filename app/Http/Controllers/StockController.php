@@ -12,7 +12,6 @@ class StockController extends Controller
         $all_stocks = Stock::query()
             ->select('code', 'article', 'unit', 'purchase_price', 'purchase_price_sum', 'margin', 'price', 'pcs', 'sum')
             ->get();
-
 //        $stock = Stock::where('code', $request->code)->first();
 //        $stock->pcs = $stock->pcs + $request->pcs;
 //        $stock->purchase_price = $request->purchase_price * (1-$request->rebate / 100) * (1-$request->discount / 100) * (1 + $request->tax / 100);
@@ -25,4 +24,6 @@ class StockController extends Controller
 
         return view('home.stock', compact('all_stocks'));
     }
+
+
 }

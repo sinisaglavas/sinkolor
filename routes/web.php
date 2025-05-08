@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 
@@ -73,7 +74,6 @@ Route::get('home/show-customer-entrance-form/{id}', [App\Http\Controllers\Custom
     ->name('home.showCustomerEntranceForm');
 Route::post('save-customer-output', [App\Http\Controllers\CustomerController::class, 'saveCustomerOutput'])->middleware('auth')->name('saveCustomerOutput');
 Route::post('/home/add-customer-payment', [App\Http\Controllers\CustomerController::class, 'addCustomerPayment'])->name('home.addCustomerPayment');
-Route::post('/send-to-sef/{id}', [App\Http\Controllers\EfakturaLogController::class, 'sendToSef'])->name('sendToSef');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home/all-customer-invoices', [App\Http\Controllers\CustomerController::class, 'allCustomerInvoices'])->middleware('auth')->name('home.allCustomerInvoices');
@@ -84,12 +84,33 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mark-customer-invoice/{id}', [App\Http\Controllers\CustomerController::class, 'markCustomerInvoice'])->name('markCustomerInvoice')->middleware('auth');
     Route::get('/generate-prescription/{id}', [App\Http\Controllers\PrescriptionController::class, 'generatePDF'])->
     name('generatePDF');
+    Route::get('/generate-codebook-pdf', [App\Http\Controllers\PrescriptionController::class, 'generateCodebookPDF'])->
+    name('generateCodebookPDF');
 // Invoices controller
     Route::get('/mark-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'markInvoice'])->name('markInvoice')->middleware('auth');
  // EfakturaLogController
-    Route::get('/efaktura-logs', [App\Http\Controllers\EfakturaLogController::class, 'index'])->name('efaktura.logs');
+    Route::get('/efaktura-logs', [App\Http\Controllers\EfakturaLogController::class, 'index'])->name('efakturaLogs');
     Route::post('/efaktura-resend/{invoice}', [\App\Http\Controllers\EfakturaLogController::class, 'resend'])->name('efaktura.resend');
+    Route::post('/send-to-sef/{id}', [App\Http\Controllers\EfakturaLogController::class, 'sendToSef'])->name('sendToSef');
 
     Route::get('/test-xml/{invoiceId}', [App\Http\Controllers\EfakturaLogController::class, 'testXml']);
+
+
+    Route::get('/test-efaktura', function () {
+        try {
+            //$response = Http::get('https://demoapi.efaktura.mfin.gov.rs');
+            $response = Http::withOptions(['verify' => false])
+                ->get('https://demoapi.efaktura.mfin.gov.rs');
+            return response()->json([
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    });
+
 
 });
