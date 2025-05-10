@@ -86,6 +86,9 @@ Route::middleware(['auth'])->group(function () {
     name('generatePDF');
     Route::get('/generate-codebook-pdf', [App\Http\Controllers\PrescriptionController::class, 'generateCodebookPDF'])->
     name('generateCodebookPDF');
+    Route::get('/generate-current-stock-pdf', [App\Http\Controllers\PrescriptionController::class, 'generateCurrentStockPDF'])->
+    name('generateCurrentStockPDF');
+
 // Invoices controller
     Route::get('/mark-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'markInvoice'])->name('markInvoice')->middleware('auth');
  // EfakturaLogController

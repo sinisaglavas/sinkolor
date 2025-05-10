@@ -27,7 +27,7 @@
                 <h5>Svi artikli - LAGER</h5>
             </div>
             <div class="col">
-                <a href="" class="btn btn-secondary w-50" target="_blank">Štampa lagera</a>
+                <a href="{{ route('generateCurrentStockPDF') }}" class="btn btn-secondary w-50" target="_blank">Štampa lagera</a>
             </div>
             <div class="col">
                 <a href="{{ route('generateCodebookPDF') }}" class="btn btn-secondary w-50" target="_blank">Štampa šifarnika</a>

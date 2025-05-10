@@ -13,7 +13,7 @@
                     <button class="btn btn-secondary form-control mt-2">Posalji</button>
                 </form>
                 @if( App\Models\Output::latest()->first())
-                <p>Zadnji evidentirani dan: {{ Carbon\Carbon::parse(\App\Models\Output::latest()->first()->date_of_turnover)->format('l d. M. Y.') }}
+                <p>Zadnji evidentirani dan: {{ Carbon\Carbon::parse(\App\Models\Output::latest()->first()->date_of_turnover)->translatedFormat('j. F Y.') }}
                     {{ \App\Models\Output::where('date_of_turnover', \App\Models\Output::latest()->first()->date_of_turnover)->sum('sum') }}</p>
                 <div class="row mb-1">
                     <div class="col"><a href="{{ route('home.getMonth', ['id'=>1]) }}" class="btn btn-info" style="width: 100%;">Januar

@@ -2,7 +2,7 @@
 <html lang="sr">
 <head>
     <meta charset="UTF-8">
-    <title>Sifarnik</title>
+    <title>Šifarnik SIN KOLOR</title>
 
     <style>
         body {
@@ -10,11 +10,6 @@
             font-size: 10px;
             margin: 0;
             padding: 0;
-        }
-
-        .page {
-            page-break-after: always;
-            padding: 10px;
         }
 
         .layout-table {
@@ -25,15 +20,27 @@
             width: 100%;
             border-collapse: collapse;
         }
-        table td {
-            line-height: 0.6;
+        /*odvajanje thead od tbody*/
+        thead::after
+        {
+            content: "";
+            display: block;
+            height: 0.3em;
+            width: 100%;
+            background: white;
         }
 
-        th, td {
+        table td {
+            line-height: 0.73;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        table th {
             border: 1px solid #667;
-            padding: 1px 2px;
+            padding: 3px 3px;
             text-align: left;
-            font-size: 7px;
+            font-size: 10px;
         }
 
         th {
@@ -50,7 +57,12 @@
 </head>
 
 <body>
-
+<script type="text/php">
+    if (isset($pdf))
+    { $pdf->page_text(36, 26, "Strana {PAGE_NUM} od {PAGE_COUNT}", null, 6);
+        $pdf->page_text(120, 22, "ŠIFARNIK ROBE ZA 'SIN KOLOR' DOO SILBAŠ NA DAN:
+    {{ \Carbon\Carbon::parse()->now()->timezone('Europe/Belgrade')->translatedFormat('j. F Y.  H:i') }}h", null, 9); }
+</script>
 <!-- GLAVNI SADRZAJ -->
 @foreach($pages as $columns)
     <div class="page">
@@ -69,7 +81,7 @@
                             @foreach($column as $item)
                                 <tr>
                                     <td>{{ $item->code }}</td>
-                                    <td style="font-size: 9px;">{{ $item->article }}</td>
+                                    <td>{{ $item->article }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -84,7 +96,7 @@
 <div class="footer">
     <script type="text/php">
             if (isset($pdf))
-            { $pdf->page_text(495, 803, "Strana {PAGE_NUM} od {PAGE_COUNT}", null, 8); }
+            { $pdf->page_text(510, 795, "Str.{PAGE_NUM} od {PAGE_COUNT}", null, 7); }
         </script>
 </div>
 </body>
