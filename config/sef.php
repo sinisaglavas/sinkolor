@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'api_key' => env('SEF_API_KEY'),
+    'api_key' => env('SEF_DEMO') ? env('SEF_DEMO_API_KEY') : env('SEF_API_KEY'),
     'company_name'   => 'Sin Kolor DOO',
     'pib'            => '113008454',
     'mb'             => '21788007',

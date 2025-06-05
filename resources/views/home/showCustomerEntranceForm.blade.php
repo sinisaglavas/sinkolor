@@ -85,11 +85,17 @@
                             </a>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <a href="{{ route('efakturaLogs') }}" class="btn btn-danger form-control mt-2">Efaktura-provera</a>
+                        </div>
+                    </div>
                         <div class="row">
                             <div class="col">
                                 <form action="{{ route('sendToSef', $invoice->id) }}" method="post" class="mt-2">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger form-control">Pošalji fakturu u SEF</button>
+                                    <button type="submit" class="btn btn-danger form-control"
+                                    onclick="return confirm('Da li ste sigurni da želite poslati ovu fakturu?')">Pošalji fakturu u SEF</button>
                                 </form>
                                 @if(session()->has('success'))
                                     <div class="alert alert-success mt-1 p-1">
@@ -103,7 +109,21 @@
                                 @endif
                             </div>
                             <div class="col">
-                                <a href="{{ route('efakturaLogs') }}" class="btn btn-danger form-control mt-2">Efaktura-provera</a>
+                                <form action="{{ route('attemptCancelInvoice', $invoice->id) }}" method="post" class="mt-2">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning form-control"
+                                            onclick="return confirm('Da li ste sigurni da želite STORNIRATI ovu fakturu?')">Storniraj fakturu u SEF-u</button>
+                                </form>
+                                @if(session()->has('success'))
+                                    <div class="alert alert-success mt-1 p-1">
+                                        {{ session()->get('success') }}
+                                    </div>
+                                @endif
+                                @if(session()->has('error'))
+                                    <div class="alert alert-success mt-1 p-1">
+                                        {{ session()->get('error') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
                 </div>

@@ -127,7 +127,7 @@ class PrescriptionController extends Controller
         ini_set('max_execution_time', 300);
 
         $all_stocks = Stock::select('code', 'article', 'unit', 'price', 'pcs')->orderBy('code')->get();
-        $date_of_turnover = Output::latest()->first()->date_of_turnover;
+        $date_of_turnover = Output::max('date_of_turnover'); // uvek zadnji datum
         $date_of_turnover = Carbon::parse($date_of_turnover)->translatedFormat('j. F Y.');
 
         //chunk($itemsPerColumn) deli kolekciju na manje kolekcije (grupe) od po 80 artikala

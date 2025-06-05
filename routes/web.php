@@ -95,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/efaktura-logs', [App\Http\Controllers\EfakturaLogController::class, 'index'])->name('efakturaLogs');
     Route::post('/efaktura-resend/{invoice}', [\App\Http\Controllers\EfakturaLogController::class, 'resend'])->name('efaktura.resend');
     Route::post('/send-to-sef/{id}', [App\Http\Controllers\EfakturaLogController::class, 'sendToSef'])->name('sendToSef');
+    Route::post('/attempt-cancel-invoice/{id}', [App\Http\Controllers\EfakturaLogController::class, 'attemptCancelInvoice'])->name('attemptCancelInvoice');
 
     Route::get('/test-xml/{invoiceId}', [App\Http\Controllers\EfakturaLogController::class, 'testXml']);
 

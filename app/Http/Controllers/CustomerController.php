@@ -27,10 +27,13 @@ class CustomerController extends Controller
         $new_customer = new Customer();
         $new_customer->customer = $request->customer;
         $new_customer->address = $request->address;
+        $new_customer->postal_code = $request->postal_code;
         $new_customer->city = $request->city;
         $new_customer->pib = $request->pib;
         $new_customer->mb = $request->mb;
         $new_customer->phone = $request->phone;
+        $new_customer->email = $request->email;
+        $new_customer->jbkjs = $request->jbkjs;
         $new_customer->save();
 
         return redirect()->back()->with('message', 'Novi kupac je snimljen');

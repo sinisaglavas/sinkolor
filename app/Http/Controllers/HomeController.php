@@ -413,20 +413,6 @@ class HomeController extends Controller
             return view('home.stock', compact('all_stocks'));
         }
 
-//        if ($name_exists && $request != ""){
-//            $search_clients = Debtor::where('name','like','%'.$request.'%')->get();//carobna linija koda
-//            return view('home.allDebtors', compact('search_clients', 'all_debtors'));
-//        }elseif ($phone_exists && $request != ""){
-//            $search_clients = Debtor::where('client_phone','like','%'.$request.'%')->get();//carobna linija koda
-//            return view('home.allDebtors', compact('search_clients', 'all_debtors'));
-//        }elseif ($request == ""){
-//            return view('home.allDebtors', compact('all_debtors'));
-//        }
-//        elseif ($name_exists == false || $phone_exists == false){
-//            return view('home.allDebtors', compact('all_debtors'));
-//
-//        }
-
     }
 
     public function supplier_invoices($id)
